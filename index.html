@@ -86,6 +86,29 @@ nav a:hover { opacity: 0.8; }
   margin-bottom: 30px;
 }
 
+/* ABOUT */
+.about-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+.about-text p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+.about-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.about-photos img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 /* PROJECTS */
 .project-grid {
   display: grid;
@@ -120,60 +143,36 @@ nav a:hover { opacity: 0.8; }
   width: 100%;
   height: 270px;
   object-fit: cover;
-  display: block;
 }
 .member-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.25));
   color: white;
   display: flex;
   align-items: flex-end;
   padding: 16px;
   opacity: 0;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
-.member-card:hover .member-overlay {
-  opacity: 1;
-}
-.member-overlay h4 {
-  margin: 0;
-  font-size: 16px;
-}
-.member-overlay span {
-  font-size: 13px;
-  opacity: 0.85;
-}
+.member-card:hover .member-overlay { opacity: 1; }
 
 /* NEWSLETTER */
 .newsletter-shelf {
   display: flex;
   gap: 25px;
   overflow-x: auto;
-  padding-bottom: 10px;
 }
 .newsletter-card {
   min-width: 220px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  position: relative;
   cursor: pointer;
 }
 .newsletter-card img {
   width: 100%;
   border-radius: 12px;
-}
-.newsletter-link {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
 }
 
 /* CTA */
@@ -196,11 +195,17 @@ nav a:hover { opacity: 0.8; }
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
-.cta button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
+/* CONTACT */
+.contact-card {
+  text-align: center;
+}
+.social-links a {
+  margin: 0 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #0077cc;
 }
 
 /* FOOTER */
@@ -209,46 +214,39 @@ footer {
   color: white;
   text-align: center;
   padding: 20px;
-  font-size: 14px;
 }
 
 /* LIGHTBOX */
 .lightbox {
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset: 0;
   background: rgba(0,0,0,0.9);
-  display: flex;
-  justify-content: center;
+  display: none;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  z-index:2000;
-  display:none;
+  z-index: 2000;
 }
 .lightbox img {
   max-width: 90%;
-  max-height: 80%;
+  max-height: 75%;
   border-radius: 12px;
-  margin-bottom: 10px;
 }
-.lightbox .close {
-  color:white;
-  font-size:28px;
-  cursor:pointer;
-  margin-bottom: 10px;
+.lightbox p {
+  color: #ddd;
+  max-width: 700px;
+  text-align: center;
+  margin: 15px 0;
 }
-.lightbox .nav-btn {
-  color:white;
-  font-size:28px;
-  cursor:pointer;
-  margin:0 20px;
-  user-select:none;
+.nav-btn, .close {
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  margin: 10px;
 }
 
 @media(max-width:900px){
-  .hero { grid-template-columns:1fr; text-align:center; }
+  .hero, .about-wrapper { grid-template-columns:1fr; text-align:center; }
 }
 </style>
 </head>
@@ -258,149 +256,92 @@ footer {
 <h1>Leo Club of Matara Marians <img src="LCMM Logo.png" width="45"></h1>
 <nav>
 <a href="#home">Home</a>
+<a href="#about">About</a>
 <a href="#projects">Projects</a>
 <a href="#execo">Meet Us</a>
 <a href="#newsletter">Newsletter</a>
-<a href="#join">Join</a>
+<a href="#contact">Contact</a>
 </nav>
 </header>
 
-<!-- HOME -->
 <section id="home" class="hero">
 <div class="hero-content">
 <h2>Leadership. Experience. Opportunity.</h2>
 <p>A youth-powered movement driven by compassion, unity, and action.</p>
 </div>
-<img src="GroupPhoto.jpg" alt="Leo Club">
+<img src="GroupPhoto.jpg">
 </section>
 
-<!-- PROJECTS -->
+<section id="about" class="section">
+<h2>About Us</h2>
+<div class="about-wrapper">
+<div class="about-text card">
+<p>The <strong>Leo Club of Matara Marians</strong> is a youth-led service organization dedicated to leadership, fellowship, and meaningful community impact.</p>
+<p>Through service, creativity, and unity, we empower young leaders to create sustainable change while growing as responsible global citizens.</p>
+</div>
+<div class="about-photos">
+<img src="about1.jpg"><img src="about2.jpg"><img src="about3.jpg">
+<img src="about4.jpg"><img src="about5.jpg"><img src="about6.jpg">
+</div>
+</div>
+</section>
+
 <section id="projects" class="section">
 <h2>Our Projects</h2>
 <div class="project-grid">
-
-<div class="card project-card" onclick="openLightbox('project1')">
-<img src="holy3.jpg">
-<h3>Colours of Love – Namasthe Mathota</h3>
-<p>A vibrant Holi Festival celebrating unity and joy.</p>
-</div>
-
-<div class="card project-card" onclick="openLightbox('project2')">
-<img src="ff1.jpg">
-<h3>Frosty Fest ’24</h3>
-<p>A festive Christmas celebration.</p>
-</div>
-
-<div class="card project-card" onclick="openLightbox('project3')">
-<img src="btth1.jpg">
-<h3>Back to the Shores</h3>
-<p>Environmental coastal restoration initiative.</p>
-</div>
-
-<div class="card project-card" onclick="openLightbox('project4')">
-<img src="np1.jpg">
-<h3>NutriPulse</h3>
-<p>Promoting nutrition and wellbeing.</p>
-</div>
-
-<div class="card project-card" onclick="openLightbox('project5')">
-<img src="melodies-of-hope.jpg">
-<h3>Frosty Fest – Melodies of Hope</h3>
-<p>A musical evening of prayer and hope.</p>
-</div>
-
+<div class="card project-card" onclick="openLightbox('project1')"><img src="holy3.jpg"><h3>Colours of Love</h3><p>Unity through celebration</p></div>
+<div class="card project-card" onclick="openLightbox('project2')"><img src="ff1.jpg"><h3>Frosty Fest ’24</h3><p>Spirit of Christmas</p></div>
+<div class="card project-card" onclick="openLightbox('project3')"><img src="btth1.jpg"><h3>Back to the Shores</h3><p>Environmental restoration</p></div>
+<div class="card project-card" onclick="openLightbox('project4')"><img src="np1.jpg"><h3>NutriPulse</h3><p>Health & wellbeing</p></div>
+<div class="card project-card" onclick="openLightbox('project5')"><img src="melodies-of-hope.jpg"><h3>Melodies of Hope</h3><p>Faith through music</p></div>
 </div>
 </section>
 
-<!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox">
 <span class="close" onclick="closeLightbox()">&times;</span>
-<img id="lightbox-img" src="">
+<img id="lightbox-img">
+<p id="lightbox-desc"></p>
 <div>
 <span class="nav-btn" onclick="prevImage()">&#10094;</span>
 <span class="nav-btn" onclick="nextImage()">&#10095;</span>
 </div>
 </div>
 
-<!-- MEET US -->
-<section id="execo" class="section">
-<h2>Meet Us</h2>
-
-<div class="card">
-<h3>Executive Committee 2025</h3>
-<div class="member-grid">
-<div class="member-card"><img src="president.jpg"><div class="member-overlay"><div><h4>President</h4><span>Leo Bisandi Mansari</span></div></div></div>
-<div class="member-card"><img src="vp.jpg"><div class="member-overlay"><div><h4>Vice President</h4><span>Leo Tharunya Dahanayaka</span></div></div></div>
-<div class="member-card"><img src="secretary.jpg"><div class="member-overlay"><div><h4>Secretary</h4><span>Leo Hashma Humam</span></div></div></div>
-<div class="member-card"><img src="treasurer.jpg"><div class="member-overlay"><div><h4>Treasurer</h4><span>Leo Dahami Vihanga</span></div></div></div>
-<div class="member-card"><img src="Senudi Sellahewa.jpg"><div class="member-overlay"><div><h4>Assistant Secretary</h4><span>Leo Senudi Sellahewa</span></div></div></div>
-<div class="member-card"><img src="Rivindi Risindini.jpg"><div class="member-overlay"><div><h4>Assistant Treasurer</h4><span>Leo Rivindi Risindini</span></div></div></div>
+<section id="contact" class="section">
+<h2>Contact Us</h2>
+<div class="card contact-card">
+<p><strong>Email:</strong> leoclubmataramarians@gmail.com</p>
+<p><strong>Phone:</strong> +94 XX XXX XXXX</p>
+<div class="social-links">
+<a href="#">Facebook</a>
+<a href="#">Instagram</a>
+<a href="#">LinkedIn</a>
 </div>
 </div>
-
-<div class="card">
-<h3>Director Board</h3>
-<div class="member-grid">
-<div class="member-card"><img src="Mihili Manjuswara1.jpg"><div class="member-overlay"><div><h4>Director of membership and retention growth</h4><span>Leo Mihili Manjuswara</span></div></div></div>
-<div class="member-card"><img src="Tharushi Omaya.jpg"><div class="member-overlay"><div><h4>Director of public relations</h4><span>Leo Tharushi Omaya</span></div></div></div>
-<div class="member-card"><img src="Thisathma Weerasekara.jpg"><div class="member-overlay"><div><h4>Director of service and joint project</h4><span>Leo Thisathma Weerasekara</span></div></div></div>
-<div class="member-card"><img src="Sanuki Dinhara1.jpg"><div class="member-overlay"><div><h4>Director of Editorial</h4><span>Leo Sanuki Dinhara</span></div></div></div>
-</div>
-</div>
-</section>
-
-<!-- NEWSLETTER -->
-<section id="newsletter" class="section">
-<h2>Newsletter</h2>
-<div class="newsletter-shelf">
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/tzgn/','_self')"><img src="_MARIANS INSIDE V1 E2.png"></div>
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/mevl/','_self')"><img src="MARIANS INSIDE.png"></div>
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/lzne/','_self')"><img src="INSIDE MARIANS-SEP.png"></div>
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/psft/','_self')"><img src="INSIDE MARIANS-OCT.png"></div>
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/mwzi/','_self')"><img src="Inside Marians NOV.png"></div>
-<div class="newsletter-card" onclick="window.open('link-to-issue6.pdf','_self')"><img src="Inside Marians DEC.png"></div>
-</div>
-</section>
-
-<!-- JOIN -->
-<section id="join" class="cta">
-<h3>Ready to Make a Difference?</h3>
-<button onclick="location.href='https://forms.gle/MKz8EkJR8EeLBGyM8'">Join Our Club</button>
 </section>
 
 <footer>© 2025 Leo Club of Matara Marians</footer>
 
 <script>
-const projectImages = {
-  project1: ['holy3.jpg', 'holy2.jpg', 'holy4.jpg', 'holy6.jpg', 'holy1.jpg', 'holy5.jpg'],
-  project2: ['ff1.jpg', 'ff2.jpg', 'ff3.jpg', 'ff4.jpg', 'ff5.jpg'],
-  project3: ['btth1.jpg', 'btth2.jpg'],
-  project4: ['np1.jpg', 'np2.jpg', 'np3.jpg', 'np4.jpg'],
-  project5: ['melodies-of-hope.jpg', 'melodies2.jpg']
+const projectData = {
+  project1:{images:['holy3.jpg','holy2.jpg'],desc:'A colourful celebration promoting unity and harmony.'},
+  project2:{images:['ff1.jpg','ff2.jpg'],desc:'Celebrating the joy and warmth of Christmas together.'},
+  project3:{images:['btth1.jpg','btth2.jpg'],desc:'Protecting and restoring our coastal environment.'},
+  project4:{images:['np1.jpg','np2.jpg'],desc:'Encouraging healthy living and nutrition awareness.'},
+  project5:{images:['melodies-of-hope.jpg'],desc:'A prayerful musical evening for hope and healing.'}
 };
-let currentImages = [];
-let currentIndex = 0;
+let currentImages=[],currentIndex=0;
 
-function openLightbox(project) {
-  currentImages = projectImages[project];
-  currentIndex = 0;
-  document.getElementById('lightbox').style.display = 'flex';
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+function openLightbox(p){
+currentImages=projectData[p].images;
+currentIndex=0;
+document.getElementById('lightbox').style.display='flex';
+document.getElementById('lightbox-img').src=currentImages[0];
+document.getElementById('lightbox-desc').innerText=projectData[p].desc;
 }
-
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-}
-
-function nextImage() {
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
-}
-
-function prevImage() {
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
-}
+function closeLightbox(){document.getElementById('lightbox').style.display='none';}
+function nextImage(){currentIndex=(currentIndex+1)%currentImages.length;document.getElementById('lightbox-img').src=currentImages[currentIndex];}
+function prevImage(){currentIndex=(currentIndex-1+currentImages.length)%currentImages.length;document.getElementById('lightbox-img').src=currentImages[currentIndex];}
 </script>
 
 </body>
