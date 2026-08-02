@@ -3,28 +3,127 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#eaf4ff" />
 <title>Leo Club of Matara Marians</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+:root {
+  --page: #edf0f1;
+  --page-deep: #e2e7e8;
+  --surface: rgba(255, 255, 255, 0.48);
+  --surface-strong: rgba(255, 255, 255, 0.72);
+  --surface-soft: rgba(255, 255, 255, 0.28);
+  --ink: #111313;
+  --muted: #62696a;
+  --line: rgba(255, 255, 255, 0.78);
+  --line-dark: rgba(17, 19, 19, 0.09);
+  --accent: #ff6a00;
+  --accent-soft: rgba(255, 106, 0, 0.13);
+  --shadow: 0 26px 80px rgba(25, 33, 34, 0.10);
+  --shadow-soft: 0 12px 34px rgba(25, 33, 34, 0.07);
+  --radius-xl: 38px;
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --container: 1380px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px;
+}
 
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  background: #f6f7fb;
-  color: #1c1c1c;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255,255,255,0.95) 0, rgba(255,255,255,0) 28%),
+    radial-gradient(circle at 93% 20%, rgba(255,106,0,0.10) 0, rgba(255,106,0,0) 24%),
+    radial-gradient(circle at 55% 92%, rgba(255,255,255,0.85) 0, rgba(255,255,255,0) 30%),
+    linear-gradient(135deg, var(--page) 0%, #f6f7f7 48%, var(--page-deep) 100%);
+  font-family: "Manrope", sans-serif;
 }
 
-/* SCROLL ANIMATION */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -2;
+  border-radius: 999px;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+body::before {
+  width: 380px;
+  height: 380px;
+  top: 22vh;
+  left: -180px;
+  border: 1px solid rgba(255, 106, 0, 0.16);
+  box-shadow:
+    110px 40px 0 12px rgba(255,255,255,0.24),
+    220px 110px 0 -6px rgba(255,106,0,0.05);
+}
+
+body::after {
+  width: 560px;
+  height: 560px;
+  right: -290px;
+  bottom: 3vh;
+  border: 1px solid rgba(17,19,19,0.09);
+  box-shadow:
+    -130px -80px 0 8px rgba(255,255,255,0.22),
+    -260px -30px 0 -20px rgba(255,106,0,0.06);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* GLASS SYSTEM */
+.glass {
+  background: linear-gradient(145deg, var(--surface-strong), var(--surface-soft));
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+}
+
+/* SCROLL REVEAL */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(34px);
+  transition:
+    opacity 0.9s cubic-bezier(.2,.75,.2,1),
+    transform 0.9s cubic-bezier(.2,.75,.2,1);
 }
+
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
@@ -32,547 +131,2767 @@ body {
 
 /* HEADER */
 header {
-  background: #0d1117;
-  color: white;
-  padding: 18px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  inset: 18px 24px auto;
   z-index: 1000;
+  max-width: calc(var(--container) - 20px);
+  margin-inline: auto;
+  padding: 12px 14px 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 22px;
+  background: rgba(245, 247, 247, 0.64);
+  border: 1px solid rgba(255,255,255,0.86);
+  box-shadow: 0 14px 40px rgba(22, 28, 29, 0.08);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
 }
+
 header h1 {
   margin: 0;
-  font-size: 26px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  font-family: "Syne", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
+
+header h1 img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  padding: 4px;
+  border-radius: 11px;
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(255,255,255,0.9);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 nav a {
-  color: white;
+  position: relative;
+  padding: 11px 14px;
+  color: var(--ink);
   text-decoration: none;
-  margin-left: 22px;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
 }
-nav a:hover { opacity: 0.8; }
+
+nav a:hover {
+  background: rgba(255,255,255,0.72);
+  transform: translateY(-1px);
+}
+
+nav a:last-child {
+  color: white;
+  background: var(--ink);
+  padding-inline: 18px;
+}
+
+nav a:last-child:hover {
+  background: var(--accent);
+}
+
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.72);
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+}
 
 /* HERO */
 .hero {
-  min-height: 90vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  padding: 80px 40px;
-  background: linear-gradient(135deg, #0d1117, #101820);
-  color: white;
+  width: min(var(--container), calc(100% - 40px));
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: 150px 0 70px;
+  position: relative;
 }
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 58%;
+  aspect-ratio: 1;
+  right: -18%;
+  top: 90px;
+  border: 1px solid rgba(17,19,19,0.10);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 31%;
+  aspect-ratio: 1;
+  right: 5%;
+  top: 185px;
+  border: 1px solid rgba(255,106,0,0.20);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 18px;
+}
+
+.hero-content h2 {
+  margin: 0;
+  max-width: 1250px;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(3.6rem, 8.9vw, 9.5rem);
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.78;
+  text-transform: uppercase;
+}
+
+.hero-content h2::first-line {
+  color: var(--ink);
+}
+
+.hero-content p {
+  position: absolute;
+  right: 2%;
+  bottom: 0.5rem;
+  width: min(360px, 32vw);
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.75;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  z-index: 1;
+  margin-top: 45px;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.hero-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  z-index: 2;
+  border-radius: calc(var(--radius-xl) - 10px);
+  background:
+    linear-gradient(180deg, rgba(11,13,13,0.02), rgba(11,13,13,0.36)),
+    linear-gradient(90deg, rgba(255,255,255,0.12), transparent 45%);
+  pointer-events: none;
+}
+
 .hero img {
   width: 100%;
-  height: auto;
-  border-radius: 16px;
-}
-.hero-content h2 {
-  font-size: 46px;
-  margin-bottom: 20px;
-}
-.hero-content p {
-  font-size: 18px;
-  line-height: 1.7;
-  opacity: 0.9;
+  height: min(68vh, 760px);
+  object-fit: cover;
+  border-radius: calc(var(--radius-xl) - 10px);
 }
 
-/* SECTIONS */
+.hero-image-wrapper::after {
+  content: "↗";
+  position: absolute;
+  z-index: 3;
+  left: 34px;
+  bottom: 30px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(18,20,20,0.36);
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* GENERAL SECTIONS */
 .section {
-  padding: 70px 40px;
-}
-.section h2 {
-  font-size: 36px;
-  margin-bottom: 30px;
+  width: min(var(--container), calc(100% - 40px));
+  margin-inline: auto;
+  padding: 100px 0;
 }
 
-/* CARD */
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-  margin-bottom: 30px;
+.section > h2 {
+  position: relative;
+  margin: 0 0 44px;
+  padding-bottom: 22px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 5.6rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-dark);
 }
 
-/* ABOUT US */
+.section > h2::after {
+  content: "↘";
+  color: var(--accent);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.48em;
+  font-weight: 400;
+  transform: translateY(-4px);
+}
+
+/* ABOUT */
 .about-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  text-align: justify;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 22px;
+  padding: 22px;
+  border-radius: var(--radius-xl);
 }
+
+.about-text {
+  padding: clamp(22px, 4vw, 56px);
+  border-radius: calc(var(--radius-xl) - 12px);
+  background: rgba(255,255,255,0.30);
+  border: 1px solid rgba(255,255,255,0.62);
+}
+
+.about-text p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.9;
+  text-align: left;
+}
+
+.about-text p + p {
+  margin-top: 22px;
+}
+
+.about-text p:first-child::first-letter {
+  float: left;
+  margin: 9px 10px 0 0;
+  color: var(--accent);
+  font-family: "Syne", sans-serif;
+  font-size: 4.8rem;
+  font-weight: 700;
+  line-height: 0.7;
+}
+
 .about-photos {
+  min-height: 570px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1.15fr 0.85fr 0.9fr;
+  grid-template-rows: 1fr 0.72fr;
   gap: 12px;
 }
+
 .about-photos img {
   width: 100%;
-  height: 140px;
+  height: 100%;
+  min-height: 0;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 22px;
+  filter: saturate(0.92) contrast(0.98);
+  transition: transform 0.55s cubic-bezier(.2,.75,.2,1), filter 0.4s ease;
+}
+
+.about-photos img:hover {
+  z-index: 3;
+  transform: scale(1.03);
+  filter: saturate(1.05) contrast(1);
+}
+
+.about-photos img:first-child {
+  grid-row: 1 / 3;
+}
+
+.about-photos img:nth-child(4) {
+  grid-column: 2 / 4;
 }
 
 /* PROJECTS */
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-}
-.project-card {
-  cursor: pointer;
-  transition: transform 0.3s;
-  position: relative;
-}
-.project-card:hover { transform: translateY(-6px); }
-.project-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-.project-card p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #444;
-}
-
-/* MEMBER CARDS */
-.member-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(12, 1fr);
   gap: 20px;
 }
-.member-card {
+
+.project-card {
+  grid-column: span 4;
   position: relative;
+  min-height: 430px;
+  padding: 12px;
   overflow: hidden;
-  border-radius: 14px;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  transition:
+    transform 0.5s cubic-bezier(.2,.75,.2,1),
+    box-shadow 0.5s ease,
+    border-color 0.5s ease;
 }
+
+.project-card:nth-child(1),
+.project-card:nth-child(5) {
+  grid-column: span 7;
+}
+
+.project-card:nth-child(2),
+.project-card:nth-child(6) {
+  grid-column: span 5;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow);
+  border-color: rgba(255,255,255,0.96);
+}
+
+.project-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.7s cubic-bezier(.2,.75,.2,1);
+}
+
+.project-card:hover img {
+  transform: scale(1.035);
+}
+
+.project-card h3 {
+  margin: 22px 10px 10px;
+  font-family: "Syne", sans-serif;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+
+.project-card p {
+  margin: 0 10px 14px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.project-card::after {
+  content: "↗";
+  position: absolute;
+  top: 26px;
+  right: 26px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(255,255,255,0.86);
+  border-radius: 50%;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 1.1rem;
+  transform: rotate(0deg);
+  transition: transform 0.35s ease, background 0.35s ease, color 0.35s ease;
+}
+
+.project-card:hover::after {
+  transform: rotate(45deg);
+  color: white;
+  background: var(--accent);
+}
+
+/* MEET US */
+.exec-section {
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.64);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.exec-section + .exec-section {
+  margin-top: 24px;
+}
+
+.exec-section h3 {
+  margin: 0 0 28px;
+  padding-bottom: 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.member-card {
+  grid-column: span 4;
+  position: relative;
+  min-height: 390px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #d9dede;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+}
+
+.exec-section:nth-of-type(2) .member-card {
+  grid-column: span 3;
+}
+
 .member-card img {
   width: 100%;
-  height: 270px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.7s cubic-bezier(.2,.75,.2,1), filter 0.5s ease;
 }
-.member-overlay {
+
+.member-card::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
-  color: white;
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  opacity: 0;
-  transition: 0.3s;
+  background: linear-gradient(180deg, transparent 48%, rgba(12,14,14,0.60));
+  pointer-events: none;
 }
-.member-card:hover .member-overlay { opacity: 1; }
+
+.member-card:hover img {
+  transform: scale(1.045);
+}
+
+.member-overlay {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 16px 17px;
+  border-radius: 18px;
+  color: white;
+  background: rgba(18,20,20,0.30);
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.13);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform: translateY(6px);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.member-card:hover .member-overlay {
+  transform: translateY(0);
+  background: rgba(18,20,20,0.48);
+}
+
+.member-overlay h4 {
+  margin: 0 0 5px;
+  color: rgba(255,255,255,0.74);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.member-overlay span {
+  font-family: "Syne", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
 
 /* NEWSLETTER */
 .newsletter-shelf {
-  display: flex;
-  gap: 25px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(245px, 18vw);
+  gap: 18px;
   overflow-x: auto;
-  padding-bottom: 10px;
+  padding: 8px 2px 28px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(17,19,19,0.18) transparent;
 }
+
+.newsletter-shelf::-webkit-scrollbar {
+  height: 7px;
+}
+
+.newsletter-shelf::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.newsletter-shelf::-webkit-scrollbar-thumb {
+  background: rgba(17,19,19,0.16);
+  border-radius: 99px;
+}
+
 .newsletter-card {
-  min-width: 220px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  scroll-snap-align: start;
   position: relative;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 24px;
   cursor: pointer;
+  transition: transform 0.45s cubic-bezier(.2,.75,.2,1), box-shadow 0.45s ease;
 }
+
+.newsletter-card:hover {
+  transform: translateY(-10px) rotate(-0.6deg);
+  box-shadow: var(--shadow);
+}
+
 .newsletter-card img {
   width: 100%;
-  border-radius: 12px;
+  aspect-ratio: 0.72;
+  object-fit: cover;
+  border-radius: 17px;
+  box-shadow: 0 15px 30px rgba(25,33,34,0.10);
 }
-.newsletter-link {
+
+.newsletter-card::after {
+  content: "↗";
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(0,0,0,0.7);
+  right: 22px;
+  bottom: 22px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
   color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 14px;
+  background: rgba(17,19,19,0.70);
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+  font-weight: 800;
 }
 
 /* JOIN + CONTACT */
 .bottom-section {
-  background: linear-gradient(135deg, #0077cc, #00b4d8);
-  color: white;
-  padding: 80px 40px;
-}
-.bottom-grid {
+  position: relative;
+  width: min(var(--container), calc(100% - 40px));
+  margin: 45px auto 90px;
+  padding: clamp(30px, 6vw, 80px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 70px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
 }
-.bottom-grid h3 {
-  font-size: 32px;
+
+.bottom-section::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  aspect-ratio: 1;
+  right: -180px;
+  top: -250px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,106,0,0.24);
+  box-shadow:
+    -70px 80px 0 -12px rgba(255,255,255,0.22),
+    -150px 155px 0 -28px rgba(17,19,19,0.05);
+  pointer-events: none;
 }
-.contact-icons a {
+
+.bottom-section > div {
+  position: relative;
+  z-index: 2;
+}
+
+.bottom-section h3 {
+  margin: 0 0 16px;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2rem, 4.4vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.bottom-section p {
+  max-width: 540px;
+  margin: 0 0 30px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.join-btn {
+  min-width: 180px;
+  padding: 16px 26px;
+  border: 0;
+  border-radius: 999px;
   color: white;
-  font-size: 22px;
-  margin-right: 18px;
-  transition: 0.3s;
+  background: var(--ink);
+  box-shadow: 0 12px 24px rgba(17,19,19,0.16);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
-.contact-icons a:hover { opacity: 0.7; }
+
+.join-btn:hover {
+  transform: translateY(-3px);
+  background: var(--accent);
+  box-shadow: 0 16px 28px rgba(255,106,0,0.23);
+}
+
+.contact-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.contact-icons a {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: rgba(255,255,255,0.58);
+  border: 1px solid rgba(255,255,255,0.88);
+  border-radius: 18px;
+  box-shadow: 0 10px 22px rgba(25,33,34,0.06);
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+
+.contact-icons a:hover {
+  transform: translateY(-4px) rotate(4deg);
+  color: white;
+  background: var(--accent);
+}
 
 /* FOOTER */
 footer {
-  background: #0d1117;
-  color: white;
+  width: min(var(--container), calc(100% - 40px));
+  margin-inline: auto;
+  padding: 28px 0 40px;
+  color: var(--muted);
+  border-top: 1px solid var(--line-dark);
   text-align: center;
-  padding: 20px;
-  font-size: 14px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-/* MOBILE */
-@media(max-width:900px){
-  .hero { grid-template-columns:1fr; text-align:center; }
-  .about-grid { grid-template-columns:1fr; }
-  .bottom-grid { grid-template-columns:1fr; text-align:center; }
+/* LIGHTBOX */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  background: rgba(232, 236, 237, 0.74);
+  backdrop-filter: blur(28px) saturate(120%);
+  -webkit-backdrop-filter: blur(28px) saturate(120%);
 }
+
+#lightbox-img {
+  max-width: min(86vw, 1250px);
+  max-height: 84vh;
+  border: 10px solid rgba(255,255,255,0.54);
+  border-radius: 28px;
+  box-shadow: 0 35px 100px rgba(19,25,26,0.24);
+}
+
+.lightbox-btn {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,0.78);
+  border-radius: 18px;
+  color: var(--ink);
+  background: rgba(255,255,255,0.55);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.lightbox-btn:hover {
+  transform: scale(1.06);
+  color: #fff;
+  background: var(--accent);
+}
+
+.lightbox-close {
+  top: 26px;
+  right: 26px;
+}
+
+.lightbox-prev {
+  left: 26px;
+}
+
+.lightbox-next {
+  right: 26px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1120px) {
+  .hero-content p {
+    position: static;
+    width: min(100%, 520px);
+    margin: 26px 0 0 auto;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-photos {
+    min-height: 520px;
+  }
+
+  .project-card,
+  .project-card:nth-child(1),
+  .project-card:nth-child(2),
+  .project-card:nth-child(5),
+  .project-card:nth-child(6) {
+    grid-column: span 6;
+  }
+
+  .member-card,
+  .exec-section:nth-of-type(2) .member-card {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 840px) {
+  header {
+    inset: 12px 14px auto;
+    padding: 10px 10px 10px 14px;
+  }
+
+  header h1 {
+    font-size: 0.78rem;
+  }
+
+  .menu-toggle {
+    display: grid;
+    place-items: center;
+  }
+
+  nav {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    display: grid;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(245,247,247,0.88);
+    border: 1px solid rgba(255,255,255,0.9);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  nav a {
+    margin: 0;
+    padding: 13px 16px;
+  }
+
+  nav a:last-child {
+    text-align: center;
+  }
+
+  .hero,
+  .section,
+  .bottom-section,
+  footer {
+    width: min(100% - 24px, var(--container));
+  }
+
+  .hero {
+    padding-top: 128px;
+  }
+
+  .hero-image-wrapper {
+    margin-top: 34px;
+    border-radius: 28px;
+  }
+
+  .hero img {
+    height: 58vh;
+    min-height: 460px;
+    border-radius: 20px;
+  }
+
+  .section {
+    padding: 74px 0;
+  }
+
+  .about-grid {
+    padding: 12px;
+  }
+
+  .about-photos {
+    min-height: 460px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 150px);
+  }
+
+  .about-photos img:first-child {
+    grid-row: 1 / 3;
+  }
+
+  .about-photos img:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .bottom-section {
+    grid-template-columns: 1fr;
+    gap: 46px;
+  }
+}
+
+@media (max-width: 620px) {
+  header h1 {
+    max-width: 240px;
+    line-height: 1.15;
+  }
+
+  .hero-content {
+    padding-inline: 4px;
+  }
+
+  .hero-content h2 {
+    font-size: clamp(3.1rem, 18vw, 5.1rem);
+    line-height: 0.83;
+  }
+
+  .hero-content p {
+    margin: 22px 0 0;
+  }
+
+  .hero-image-wrapper {
+    padding: 8px;
+    border-radius: 24px;
+  }
+
+  .hero-image-wrapper::before {
+    inset: 8px;
+    border-radius: 17px;
+  }
+
+  .hero img {
+    height: 54vh;
+    min-height: 420px;
+    border-radius: 17px;
+  }
+
+  .hero-image-wrapper::after {
+    left: 20px;
+    bottom: 18px;
+    padding: 10px 12px;
+    font-size: 0.57rem;
+  }
+
+  .section > h2 {
+    margin-bottom: 28px;
+  }
+
+  .about-text {
+    padding: 26px 22px;
+  }
+
+  .about-photos {
+    min-height: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 145px);
+  }
+
+  .project-card,
+  .project-card:nth-child(1),
+  .project-card:nth-child(2),
+  .project-card:nth-child(5),
+  .project-card:nth-child(6) {
+    grid-column: 1 / -1;
+    min-height: 0;
+  }
+
+  .project-card img {
+    height: 245px;
+  }
+
+  .exec-section {
+    padding: 16px;
+  }
+
+  .member-card,
+  .exec-section:nth-of-type(2) .member-card {
+    grid-column: 1 / -1;
+    min-height: 420px;
+  }
+
+  .newsletter-shelf {
+    grid-auto-columns: 76vw;
+  }
+
+  .bottom-section {
+    padding: 34px 24px;
+    margin-bottom: 55px;
+  }
+
+  .lightbox-prev {
+    left: 12px;
+  }
+
+  .lightbox-next {
+    right: 12px;
+  }
+
+  .lightbox-close {
+    top: 14px;
+    right: 14px;
+  }
+
+  .lightbox-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =========================================================
+   BLUE + WHITE LIVE UI UPGRADE
+   ========================================================= */
+:root {
+  --page: #edf6ff;
+  --page-deep: #dcecff;
+  --surface: rgba(255, 255, 255, 0.52);
+  --surface-strong: rgba(255, 255, 255, 0.78);
+  --surface-soft: rgba(231, 244, 255, 0.34);
+  --ink: #0a1830;
+  --muted: #61718d;
+  --line: rgba(255, 255, 255, 0.88);
+  --line-dark: rgba(24, 83, 160, 0.11);
+  --accent: #176bff;
+  --accent-2: #62b5ff;
+  --accent-3: #cbe8ff;
+  --accent-soft: rgba(23, 107, 255, 0.13);
+  --shadow: 0 28px 90px rgba(31, 91, 164, 0.16);
+  --shadow-soft: 0 14px 42px rgba(31, 91, 164, 0.10);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255,255,255,0.98) 0, rgba(255,255,255,0) 30%),
+    radial-gradient(circle at 92% 15%, rgba(68, 156, 255, 0.18) 0, rgba(68, 156, 255, 0) 29%),
+    radial-gradient(circle at 45% 100%, rgba(181, 222, 255, 0.50) 0, rgba(181, 222, 255, 0) 34%),
+    linear-gradient(135deg, #eaf5ff 0%, #f9fcff 49%, #dcecff 100%);
+}
+
+body::before {
+  border-color: rgba(23, 107, 255, 0.16);
+  box-shadow:
+    110px 40px 0 12px rgba(255,255,255,0.28),
+    220px 110px 0 -6px rgba(72, 160, 255, 0.08);
+}
+
+body::after {
+  border-color: rgba(23,107,255,0.11);
+  box-shadow:
+    -130px -80px 0 8px rgba(255,255,255,0.25),
+    -260px -30px 0 -20px rgba(72,160,255,0.08);
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 4000;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), #ffffff);
+  box-shadow: 0 0 20px rgba(23,107,255,0.58);
+  pointer-events: none;
+}
+
+.cursor-glow {
+  position: fixed;
+  z-index: -1;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle, rgba(69,158,255,0.19), rgba(69,158,255,0.06) 38%, transparent 70%);
+  filter: blur(5px);
+  transition: opacity 0.35s ease;
+}
+
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-orb,
+.ambient-ring {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.ambient-orb {
+  filter: blur(3px);
+  opacity: 0.58;
+  animation: orbFloat 15s ease-in-out infinite alternate;
+}
+
+.orb-one {
+  width: 260px;
+  height: 260px;
+  top: 14%;
+  left: 5%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.95), rgba(111,187,255,0.38) 48%, rgba(23,107,255,0.04) 72%);
+}
+
+.orb-two {
+  width: 420px;
+  height: 420px;
+  top: 48%;
+  right: -170px;
+  background: radial-gradient(circle at 38% 35%, rgba(255,255,255,0.85), rgba(86,169,255,0.28) 45%, rgba(23,107,255,0.02) 72%);
+  animation-delay: -5s;
+  animation-duration: 18s;
+}
+
+.orb-three {
+  width: 190px;
+  height: 190px;
+  bottom: 8%;
+  left: 26%;
+  background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.88), rgba(147,207,255,0.34) 48%, rgba(23,107,255,0.02) 73%);
+  animation-delay: -9s;
+  animation-duration: 13s;
+}
+
+.ambient-ring {
+  border: 1px solid rgba(23,107,255,0.13);
+  animation: ringDrift 22s linear infinite;
+}
+
+.ring-one {
+  width: 520px;
+  height: 520px;
+  top: 12%;
+  right: -230px;
+}
+
+.ring-two {
+  width: 330px;
+  height: 330px;
+  bottom: 4%;
+  left: -170px;
+  animation-direction: reverse;
+  animation-duration: 18s;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(25px, -35px, 0) scale(1.06); }
+  100% { transform: translate3d(-18px, 20px, 0) scale(0.96); }
+}
+
+@keyframes ringDrift {
+  from { transform: rotate(0deg) translate3d(0, 0, 0); }
+  50% { transform: rotate(180deg) translate3d(22px, -18px, 0); }
+  to { transform: rotate(360deg) translate3d(0, 0, 0); }
+}
+
+.glass {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.82), rgba(225,241,255,0.35));
+  border-color: rgba(255,255,255,0.90);
+  box-shadow:
+    0 18px 50px rgba(38, 101, 174, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.75);
+}
+
+header {
+  background: rgba(241, 248, 255, 0.70);
+  border-color: rgba(255,255,255,0.92);
+  box-shadow: 0 14px 45px rgba(28, 89, 160, 0.11);
+}
+
+nav a.active-link {
+  color: var(--accent);
+  background: rgba(255,255,255,0.72);
+}
+
+nav a:last-child {
+  background: linear-gradient(135deg, #0c3e9b, var(--accent));
+  box-shadow: 0 10px 24px rgba(23,107,255,0.20);
+}
+
+.hero::before {
+  border-color: rgba(23,107,255,0.13);
+  animation: ringPulse 7s ease-in-out infinite;
+}
+
+.hero::after {
+  border-color: rgba(93,180,255,0.26);
+  animation: ringPulse 7s ease-in-out 1.5s infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.04); opacity: 0.35; }
+}
+
+.hero-content h2 {
+  background: linear-gradient(120deg, #07152c 8%, #154892 48%, #2a8dff 82%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-image-wrapper {
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease-out;
+}
+
+.hero-image-wrapper::before {
+  background:
+    linear-gradient(180deg, rgba(8,30,66,0.00), rgba(8,30,66,0.30)),
+    linear-gradient(90deg, rgba(224,243,255,0.16), transparent 46%);
+}
+
+.hero-image-wrapper::after {
+  background: rgba(8, 47, 101, 0.34);
+}
+
+.section > h2 {
+  background: linear-gradient(110deg, var(--ink), #295fae 68%, #4aa7ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.project-card,
+.current-member-card,
+.newsletter-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --lift: 0px;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.project-card.interactive-tilt,
+.current-member-card.interactive-tilt,
+.newsletter-card.interactive-tilt {
+  transform:
+    perspective(1100px)
+    rotateX(var(--rx))
+    rotateY(var(--ry))
+    translateY(var(--lift)) !important;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.project-card.interactive-tilt:hover,
+.current-member-card.interactive-tilt:hover,
+.newsletter-card.interactive-tilt:hover {
+  --lift: -8px;
+}
+
+.project-card.interactive-tilt::before,
+.current-member-card.interactive-tilt::before,
+.newsletter-card.interactive-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,0.43), transparent 34%);
+  transition: opacity 0.3s ease;
+}
+
+.project-card.interactive-tilt:hover::before,
+.current-member-card.interactive-tilt:hover::before,
+.newsletter-card.interactive-tilt:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover::after,
+.join-btn:hover,
+.contact-icons a:hover {
+  background: linear-gradient(135deg, #0d4bc5, var(--accent-2));
+}
+
+.bottom-section::before {
+  border-color: rgba(23,107,255,0.24);
+  box-shadow:
+    -70px 80px 0 -12px rgba(255,255,255,0.25),
+    -150px 155px 0 -28px rgba(23,107,255,0.07);
+}
+
+/* CURRENT LEADERSHIP */
+.leadership-shell {
+  position: relative;
+  padding: clamp(20px, 3vw, 34px);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.leadership-shell::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  right: -160px;
+  top: -190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83,170,255,0.20), transparent 66%);
+  animation: leadershipGlow 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes leadershipGlow {
+  from { transform: translate3d(0,0,0) scale(0.94); opacity: 0.55; }
+  to { transform: translate3d(-28px,35px,0) scale(1.12); opacity: 0.95; }
+}
+
+.leadership-heading {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.section-kicker {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.leadership-heading h3,
+.newsletter-library-top h3 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.65rem, 3vw, 3.2rem);
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.board-switcher {
+  display: flex;
+  gap: 7px;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(210,233,255,0.54);
+  border: 1px solid rgba(255,255,255,0.82);
+}
+
+.board-tab {
+  padding: 11px 17px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.board-tab.active {
+  color: #fff;
+  background: linear-gradient(135deg, #104ebd, var(--accent));
+  box-shadow: 0 10px 22px rgba(23,107,255,0.20);
+}
+
+.current-board-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.current-member-card {
+  grid-column: span 4;
+  position: relative;
+  min-height: 410px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.88);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.76), rgba(201,229,255,0.48));
+  box-shadow: 0 16px 40px rgba(31,91,164,0.11);
+}
+
+.current-member-card:nth-child(1),
+.current-member-card:nth-child(2) {
+  grid-column: span 6;
+}
+
+.current-member-photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255,255,255,0.96), rgba(177,218,255,0.78) 45%, rgba(63,144,237,0.42) 100%);
+}
+
+.current-member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(.2,.75,.2,1);
+}
+
+.current-member-card:hover .current-member-photo img {
+  transform: scale(1.045);
+}
+
+.member-initials {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(16,75,154,0.62);
+  font-family: "Syne", sans-serif;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+}
+
+.current-member-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 43%, rgba(8,34,73,0.08) 57%, rgba(5,25,57,0.76) 100%);
+  pointer-events: none;
+}
+
+.current-member-info {
+  position: absolute;
+  z-index: 5;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 17px 18px;
+  border-radius: 19px;
+  color: #fff;
+  background: rgba(9, 42, 88, 0.34);
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow: 0 16px 38px rgba(4,24,55,0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.current-member-info h4 {
+  margin: 0 0 5px;
+  color: rgba(255,255,255,0.76);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.current-member-info p {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+  font-size: 1.03rem;
+  font-weight: 600;
+}
+
+.current-member-info .pending-name {
+  color: rgba(255,255,255,0.78);
+  font-style: normal;
+}
+
+/* PAST LEADERSHIP */
+.past-leadership {
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.past-leadership summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.past-leadership summary::-webkit-details-marker {
+  display: none;
+}
+
+.past-leadership summary small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.past-leadership summary strong {
+  font-family: "Syne", sans-serif;
+  font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+}
+
+.archive-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archive-action i {
+  transition: transform 0.35s ease;
+}
+
+.past-leadership[open] .archive-action i {
+  transform: rotate(180deg);
+}
+
+.past-leadership-content {
+  padding: 0 28px 28px;
+  animation: archiveOpen 0.5s ease both;
+}
+
+@keyframes archiveOpen {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.past-board-block {
+  padding-top: 24px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.past-board-block + .past-board-block {
+  margin-top: 30px;
+}
+
+.past-board-block > h3 {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.past-member-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.member-card.past-card {
+  min-height: 300px;
+  filter: saturate(0.72);
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.member-card.past-card:hover {
+  filter: saturate(1);
+  transform: translateY(-5px);
+}
+
+/* NEWSLETTER LIBRARY */
+.newsletter-studio {
+  display: grid;
+  gap: 22px;
+}
+
+.newsletter-featured {
+  position: relative;
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.76fr) minmax(0, 1.24fr);
+  gap: clamp(26px, 5vw, 74px);
+  align-items: center;
+  padding: clamp(24px, 5vw, 62px);
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+}
+
+.newsletter-featured::after {
+  content: "";
+  position: absolute;
+  width: 540px;
+  height: 540px;
+  right: -190px;
+  bottom: -270px;
+  border: 1px solid rgba(23,107,255,0.18);
+  border-radius: 50%;
+  box-shadow:
+    -90px -55px 0 -15px rgba(255,255,255,0.20),
+    -180px -105px 0 -36px rgba(23,107,255,0.07);
+  animation: featuredRing 11s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes featuredRing {
+  to { transform: rotate(360deg); }
+}
+
+.featured-cover-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 350px);
+  margin-inline: auto;
+  perspective: 1200px;
+}
+
+.featured-cover-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 9% -8% -6% 12%;
+  border-radius: 30px;
+  background: rgba(23,107,255,0.21);
+  filter: blur(28px);
+  transform: translateZ(-1px);
+}
+
+.featured-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.72;
+  object-fit: cover;
+  border: 9px solid rgba(255,255,255,0.64);
+  border-radius: 24px;
+  box-shadow: 0 28px 70px rgba(22,78,147,0.22);
+  transform: rotateY(-7deg) rotateX(2deg);
+  animation: coverFloat 5.5s ease-in-out infinite;
+}
+
+@keyframes coverFloat {
+  0%, 100% { transform: rotateY(-7deg) rotateX(2deg) translateY(0); }
+  50% { transform: rotateY(-4deg) rotateX(1deg) translateY(-12px); }
+}
+
+.featured-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.featured-copy .featured-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 9px 12px;
+  color: var(--accent);
+  background: rgba(215,236,255,0.70);
+  border: 1px solid rgba(255,255,255,0.84);
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.featured-copy h3 {
+  max-width: 680px;
+  margin: 0 0 14px;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 5.4rem);
+  letter-spacing: -0.06em;
+  line-height: 0.93;
+}
+
+.featured-copy p {
+  max-width: 530px;
+  margin: 0 0 28px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.featured-open-btn,
+.library-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, #0c49b9, var(--accent));
+  box-shadow: 0 13px 26px rgba(23,107,255,0.21);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-open-btn {
+  padding: 15px 22px;
+}
+
+.featured-open-btn:hover,
+.library-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 32px rgba(23,107,255,0.28);
+}
+
+.newsletter-library {
+  padding: clamp(20px, 3vw, 34px);
+  border-radius: var(--radius-xl);
+}
+
+.newsletter-library-top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.newsletter-search {
+  min-width: min(320px, 100%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.90);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+}
+
+.newsletter-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.newsletter-search input::placeholder {
+  color: #8290a6;
+}
+
+.newsletter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.newsletter-grid .newsletter-card {
+  display: block;
+  position: relative;
+  min-width: 0;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 23px;
+  text-decoration: none;
+}
+
+.newsletter-grid .newsletter-card img {
+  width: 100%;
+  aspect-ratio: 0.72;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(22,78,147,0.12);
+}
+
+.newsletter-grid .newsletter-card::after {
+  content: "↗";
+  position: absolute;
+  z-index: 7;
+  right: 20px;
+  bottom: 54px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(7,42,88,0.70);
+  border: 1px solid rgba(255,255,255,0.30);
+  border-radius: 50%;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.newsletter-card-meta {
+  position: relative;
+  z-index: 6;
+  padding: 13px 6px 5px;
+}
+
+.newsletter-card-meta strong {
+  display: block;
+  color: var(--ink);
+  font-family: "Syne", sans-serif;
+  font-size: 0.93rem;
+  line-height: 1.25;
+}
+
+.newsletter-card-meta span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.newsletter-empty {
+  grid-column: 1 / -1;
+  padding: 50px 20px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.newsletter-library-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.newsletter-result-count {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.library-btn {
+  padding: 13px 18px;
+}
+
+.library-btn[hidden] {
+  display: none;
+}
+
+@media (max-width: 1120px) {
+  .current-member-card,
+  .current-member-card:nth-child(1),
+  .current-member-card:nth-child(2) {
+    grid-column: span 6;
+  }
+
+  .past-member-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .newsletter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
+  .leadership-heading,
+  .newsletter-library-top {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .board-switcher {
+    width: 100%;
+  }
+
+  .board-tab {
+    flex: 1;
+  }
+
+  .newsletter-featured {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .featured-copy p {
+    margin-inline: auto;
+  }
+
+  .newsletter-search {
+    width: 100%;
+  }
+
+  .past-member-grid,
+  .newsletter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cursor-glow {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .current-member-card,
+  .current-member-card:nth-child(1),
+  .current-member-card:nth-child(2) {
+    grid-column: 1 / -1;
+    min-height: 410px;
+  }
+
+  .board-switcher {
+    display: grid;
+    border-radius: 22px;
+  }
+
+  .board-tab {
+    border-radius: 16px;
+  }
+
+  .past-leadership summary {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 22px;
+  }
+
+  .past-leadership-content {
+    padding: 0 16px 18px;
+  }
+
+  .past-member-grid,
+  .newsletter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-card.past-card {
+    min-height: 390px;
+  }
+
+  .newsletter-featured {
+    min-height: 0;
+    padding: 24px 18px 34px;
+  }
+
+  .featured-cover-wrap {
+    width: min(80%, 310px);
+  }
+
+  .newsletter-library-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .library-btn {
+    width: 100%;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow {
+    display: none;
+  }
+
+  .project-card.interactive-tilt,
+  .current-member-card.interactive-tilt,
+  .newsletter-card.interactive-tilt {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb,
+  .ambient-ring,
+  .hero::before,
+  .hero::after,
+  .leadership-shell::after,
+  .featured-cover,
+  .newsletter-featured::after {
+    animation: none !important;
+  }
+
+  .cursor-glow {
+    display: none;
+  }
+}
+
 </style>
 </head>
 
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="ambient-layer" aria-hidden="true">
+  <span class="ambient-orb orb-one"></span>
+  <span class="ambient-orb orb-two"></span>
+  <span class="ambient-orb orb-three"></span>
+  <span class="ambient-ring ring-one"></span>
+  <span class="ambient-ring ring-two"></span>
+</div>
 
 <header>
-<h1>Leo Club of Matara Marians <img src="LCMM Logo.png" width="45" alt="LCMM Logo"></h1>
-<nav>
-<a href="#home">Home</a>
-<a href="#about">About</a>
-<a href="#projects">Projects</a>
-<a href="#execo">Meet Us</a>
-<a href="#newsletter">Newsletter</a>
-<a href="#join">Join</a>
-</nav>
+  <h1>Leo Club of Matara Marians <img src="LCMM Logo.png" width="35" alt="LCMM Logo"></h1>
+
+  <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#execo">Meet Us</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#join">Join</a>
+  </nav>
 </header>
 
 <section id="home" class="hero reveal">
-<div class="hero-content">
-<h2>Leadership. Experience. Opportunity.</h2>
-<p>A youth-powered movement driven by compassion, unity, and action.</p>
-</div>
-<img src="GroupPhoto.jpg" alt="Group Photo">
+  <div class="hero-content">
+    <h2>Leadership.<br>Experience.<br>Opportunity.</h2>
+    <p>A youth-powered movement driven by compassion, unity, and action.</p>
+  </div>
+
+  <div class="hero-image-wrapper glass">
+    <img src="GroupPhoto.jpg" alt="Group Photo">
+  </div>
 </section>
 
 <!-- ABOUT US -->
 <section id="about" class="section reveal">
-<h2>About Us</h2>
-<div class="about-grid card">
-<div>
-<p>
-Founded in 2023 at St. Mary’s Convent, Matara, the Leo Club of Matara Marians has quickly grown into a dynamic 
-force for youth leadership and community service. Inspired by the guidance of staff advisor Lion Lady Yuagnthi Gunasekara, 
-charter president Leo Irushi Abeygunawardhana, and an impactful orientation by former District President 
-Leo Dilitha Ranjuna FLM, the club embraced the core values of Leoism — service, teamwork, and kindness.</p>
-<p>
-Under the leadership of Leo Hiruni Nawarathne in its second term, the club expanded its impact through notable initiatives 
-such as the “Frosty Fest” Christmas carol program and Matara’s first-ever “Colours of Love” Holi Festival. 
-Now in its third year, operating under Leo District 306 D8 with District President Leo Anushka Liyanage and club president 
-Leo Bisandi Mansari, the Marians Leos continue to strengthen their legacy through meaningful service and sustained 
-community development in Matara.
-</p>
-</div>
-<div class="about-photos">
-<img src="about1.jpg" alt="About Photo 1">
-<img src="about2.jpg" alt="About Photo 2">
-<img src="about3.jpg" alt="About Photo 3">
-<img src="about4.jpg" alt="About Photo 4">
-<img src="about5.jpg" alt="About Photo 5">
-<img src="about6.jpg" alt="About Photo 6">
-</div>
-</div>
+  <h2>About Us</h2>
+
+  <div class="about-grid glass">
+    <div class="about-text">
+      <p>
+        Founded in 2023 at St. Mary’s Convent, Matara, the Leo Club of Matara Marians has quickly grown into a dynamic 
+        force for youth leadership and community service. Inspired by the guidance of staff advisor Lion Lady Yuagnthi Gunasekara, 
+        charter president Leo Irushi Abeygunawardhana, and an impactful orientation by former District President 
+        Leo Dilitha Ranjuna FLM, the club embraced the core values of Leoism — service, teamwork, and kindness.
+      </p>
+
+      <p>
+        Under the leadership of Leo Hiruni Nawarathne in its second term, the club expanded its impact through notable initiatives 
+        such as the “Frosty Fest” Christmas carol program and Matara’s first-ever “Colours of Love” Holi Festival. 
+        Now in its third year, operating under Leo District 306 D8 with District President Leo Anushka Liyanage and club president 
+        Leo Bisandi Mansari, the Marians Leos continue to strengthen their legacy through meaningful service and sustained 
+        community development in Matara.
+      </p>
+    </div>
+
+    <div class="about-photos">
+      <img src="about1.jpg" alt="About Photo 1">
+      <img src="about2.jpg" alt="About Photo 2">
+      <img src="about3.jpg" alt="About Photo 3">
+      <img src="about4.jpg" alt="About Photo 4">
+      <img src="about5.jpg" alt="About Photo 5">
+      <img src="about6.jpg" alt="About Photo 6">
+    </div>
+  </div>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects" class="section reveal">
-<h2>Our Projects</h2>
-<div class="project-grid">
+  <h2>Our Projects</h2>
 
-<div class="card project-card" onclick="openLightbox('project1')">
-<img src="holy3.jpg" alt="Colours of Love Project">
-<h3>Colours of Love – Namasthe Mathota</h3>
-<p>A celebration of unity beyond boundaries, spreading joy, harmony, and cultural togetherness.</p>
-</div>
+  <div class="project-grid">
+    <div class="glass project-card" onclick="openLightbox('project1')">
+      <img src="holy3.jpg" alt="Colours of Love Project">
+      <h3>Colours of Love – Namasthe Mathota</h3>
+      <p>A celebration of unity beyond boundaries, spreading joy, harmony, and cultural togetherness.</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project2')">
-<img src="ff1.jpg" alt="Frosty Fest 24 Project">
-<h3>Frosty Fest ’24</h3>
-<p>A heartwarming Christmas festival sharing hope, smiles, and festive cheer.</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project2')">
+      <img src="ff1.jpg" alt="Frosty Fest 24 Project">
+      <h3>Frosty Fest ’24</h3>
+      <p>A heartwarming Christmas festival sharing hope, smiles, and festive cheer.</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project3')">
-<img src="btth1.jpg" alt="Back to the Shores Project">
-<h3>Back to the Shores</h3>
-<p>An environmental initiative restoring coastal beauty and protecting marine ecosystems.</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project3')">
+      <img src="btth1.jpg" alt="Back to the Shores Project">
+      <h3>Back to the Shores</h3>
+      <p>An environmental initiative restoring coastal beauty and protecting marine ecosystems.</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project4')">
-<img src="np1.jpg" alt="NutriPulse Project">
-<h3>NutriPulse</h3>
-<p>Promoting healthy nutrition and awareness for a stronger future generation.</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project4')">
+      <img src="np1.jpg" alt="NutriPulse Project">
+      <h3>NutriPulse</h3>
+      <p>Promoting healthy nutrition and awareness for a stronger future generation.</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project5')">
-<img src="ffmf1.jpg" alt="Melodies of Hope Project">
-<h3>Frosty Fest - Melodies of Hope</h3>
-<p>A soulful musical evening of prayer, compassion, and togetherness.</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project5')">
+      <img src="ffmf1.jpg" alt="Melodies of Hope Project">
+      <h3>Frosty Fest - Melodies of Hope</h3>
+      <p>A soulful musical evening of prayer, compassion, and togetherness.</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project6')">
-<img src="pc.jpeg" alt="Pixel Craft - Phase II">
-<h3>Pixel Craft - Phase II</h3>
-<p>Empowering Leos Through Digital Design</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project6')">
+      <img src="pc.jpeg" alt="Pixel Craft - Phase II">
+      <h3>Pixel Craft - Phase II</h3>
+      <p>Empowering Leos Through Digital Design</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project7')">
-<img src="sp.jpeg" alt="Senehe Piyasa">
-<h3>Senehe Piyasa</h3>
-<p>Compassion in Action for Inclusive Communities</p>
-</div>
+    <div class="glass project-card" onclick="openLightbox('project7')">
+      <img src="sp.jpeg" alt="Senehe Piyasa">
+      <h3>Senehe Piyasa</h3>
+      <p>Compassion in Action for Inclusive Communities</p>
+    </div>
 
-<div class="card project-card" onclick="openLightbox('project8')">
-<img src="k.jpg" alt="Kaalartha">
-<h3>Kaalaartha</h3>
-<p>Strengthening Education Through Infrastructure</p>
-</div>
-
-  
-</div>
+    <div class="glass project-card" onclick="openLightbox('project8')">
+      <img src="k.jpg" alt="Kaalartha">
+      <h3>Kaalaartha</h3>
+      <p>Strengthening Education Through Infrastructure</p>
+    </div>
+  </div>
 </section>
 
 <!-- MEET US -->
 <section id="execo" class="section reveal">
-<h2>Meet Us</h2>
+  <h2>Meet Us</h2>
 
-<div class="card">
-<h3>Executive Committee 2025</h3>
-<div class="member-grid">
+  <div class="leadership-shell glass">
+    <div class="leadership-heading">
+      <div>
+        <span class="section-kicker">Current Leadership</span>
+        <h3>Executive Committee 2026/27</h3>
+      </div>
 
-<div class="member-card">
-  <img src="president.jpg" alt="President Leo Bisandi Mansari">
-  <div class="member-overlay">
-    <div>
-      <h4>President</h4>
-      <span>Leo Bisandi Mansari</span>
+      <div class="board-switcher" role="tablist" aria-label="Current leadership boards">
+        <button class="board-tab active" type="button" role="tab" aria-selected="true" data-board-target="executive">
+          Executive Committee
+        </button>
+        <button class="board-tab" type="button" role="tab" aria-selected="false" data-board-target="directors">
+          Director Board
+        </button>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="member-card">
-  <img src="vp.jpg" alt="Vice President Leo Tharunya Dahanayaka">
-  <div class="member-overlay">
-    <div>
-      <h4>Vice President</h4>
-      <span>Leo Tharunya Dahanayaka</span>
+    <!--
+      Add the new 2026/27 names and image paths in the currentBoardMembers
+      array near the bottom of this HTML file. Empty image values automatically
+      use the clean blue initials placeholder.
+    -->
+    <div id="current-board-grid" class="current-board-grid" aria-live="polite"></div>
+  </div>
+
+  <details class="past-leadership glass">
+    <summary>
+      <span>
+        <small>Leadership Archive</small>
+        <strong>Past Committee · 2025/26</strong>
+      </span>
+      <span class="archive-action">View Past Leadership <i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+
+    <div class="past-leadership-content">
+      <div class="past-board-block">
+        <h3>Executive Committee 2025/26</h3>
+
+        <div class="past-member-grid">
+          <article class="member-card past-card">
+            <img src="president.jpg" alt="President Leo Bisandi Mansari">
+            <div class="member-overlay">
+              <h4>President</h4>
+              <span>Leo Bisandi Mansari</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="vp.jpg" alt="Vice President Leo Tharunya Dahanayaka">
+            <div class="member-overlay">
+              <h4>Vice President</h4>
+              <span>Leo Tharunya Dahanayaka</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="secretary.jpg" alt="Secretary Leo Hashma Humam">
+            <div class="member-overlay">
+              <h4>Secretary</h4>
+              <span>Leo Hashma Humam</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="treasurer.jpg" alt="Treasurer Leo Dahami Vihanga">
+            <div class="member-overlay">
+              <h4>Treasurer</h4>
+              <span>Leo Dahami Vihanga</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa">
+            <div class="member-overlay">
+              <h4>Assistant Secretary</h4>
+              <span>Leo Senudi Sellahewa</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini">
+            <div class="member-overlay">
+              <h4>Assistant Treasurer</h4>
+              <span>Leo Rivindi Risindini</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="past-board-block">
+        <h3>Director Board 2025/26</h3>
+
+        <div class="past-member-grid">
+          <article class="member-card past-card">
+            <img src="Mihili Manjuswara1.jpg" alt="Director of Membership & Retention Growth Leo Mihili Manjuswara">
+            <div class="member-overlay">
+              <h4>Director of Membership</h4>
+              <span>Leo Mihili Manjuswara</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="Tharushi Omaya.jpg" alt="Director of Public Relations Leo Tharushi Omaya">
+            <div class="member-overlay">
+              <h4>Director of PR</h4>
+              <span>Leo Tharushi Omaya</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="Thisathma Weerasekara.jpg" alt="Director of Service & Joint Projects Leo Thisathma Weerasekara">
+            <div class="member-overlay">
+              <h4>Director of Service</h4>
+              <span>Leo Thisathma Weerasekara</span>
+            </div>
+          </article>
+
+          <article class="member-card past-card">
+            <img src="Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara">
+            <div class="member-overlay">
+              <h4>Director of Editorial</h4>
+              <span>Leo Sanuki Dinhara</span>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="secretary.jpg" alt="Secretary Leo Hashma Humam">
-  <div class="member-overlay">
-    <div>
-      <h4>Secretary</h4>
-      <span>Leo Hashma Humam</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="treasurer.jpg" alt="Treasurer Leo Dahami Vihanga">
-  <div class="member-overlay">
-    <div>
-      <h4>Treasurer</h4>
-      <span>Leo Dahami Vihanga</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa">
-  <div class="member-overlay">
-    <div>
-      <h4>Assistant Secretary</h4>
-      <span>Leo Senudi Sellahewa</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini">
-  <div class="member-overlay">
-    <div>
-      <h4>Assistant Treasurer</h4>
-      <span>Leo Rivindi Risindini</span>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
-
-<div class="card">
-<h3>Director Board</h3>
-<div class="member-grid">
-
-<div class="member-card">
-  <img src="Mihili Manjuswara1.jpg" alt="Director of Membership & Retention Growth Leo Mihili Manjuswara">
-  <div class="member-overlay">
-    <div>
-      <h4>Director of Membership & Retention Growth</h4>
-      <span>Leo Mihili Manjuswara</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="Tharushi Omaya.jpg" alt="Director of Public Relations Leo Tharushi Omaya">
-  <div class="member-overlay">
-    <div>
-      <h4>Director of Public Relations</h4>
-      <span>Leo Tharushi Omaya</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="Thisathma Weerasekara.jpg" alt="Director of Service & Joint Projects Leo Thisathma Weerasekara">
-  <div class="member-overlay">
-    <div>
-      <h4>Director of Service & Joint Projects</h4>
-      <span>Leo Thisathma Weerasekara</span>
-    </div>
-  </div>
-</div>
-
-<div class="member-card">
-  <img src="Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara">
-  <div class="member-overlay">
-    <div>
-      <h4>Director of Editorial</h4>
-      <span>Leo Sanuki Dinhara</span>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
-
+  </details>
 </section>
 
 <!-- NEWSLETTER -->
 <section id="newsletter" class="section reveal">
-<h2>Newsletter</h2>
+  <h2>Newsletter</h2>
 
-<div class="newsletter-shelf">
+  <div class="newsletter-studio">
+    <div id="newsletter-featured" class="newsletter-featured glass"></div>
 
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/tzgn/','_self')">
-  <img src="IME1V1.png" alt="Newsletter Issue 1">
-</div>
+    <div class="newsletter-library glass">
+      <div class="newsletter-library-top">
+        <div>
+          <span class="section-kicker">Inside Marians</span>
+          <h3>Edition Library</h3>
+        </div>
 
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/mevl/','_self')">
-  <img src="MARIANS INSIDE.png" alt="Newsletter Issue 2">
-</div>
+        <label class="newsletter-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="newsletter-search-input" type="search" placeholder="Search editions" aria-label="Search newsletter editions">
+        </label>
+      </div>
 
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/lzne/','_self')">
-  <img src="INSIDE MARIANS-SEP.png" alt="Newsletter Issue 3">
-</div>
+      <div id="newsletter-grid" class="newsletter-grid"></div>
 
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/psft/','_self')">
-  <img src="INSIDE MARIANS-OCT.png" alt="Newsletter Issue 4">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/mwzi/','_self')">
-  <img src="Inside Marians NOV.png" alt="Newsletter Issue 5">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/hsbx/','_self')">
-  <img src="Inside Marians DEC.png" alt="Newsletter Issue 6">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/mbyq/','_self')">
-  <img src="Inside Marians Vol 1 Edition 7.png" alt="Newsletter Issue 6">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/resd/','_self')">
-  <img src="Inside Marians Vol 1 Edition 8.png" alt="Newsletter Issue 6">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/uxrl/','_self')">
-  <img src="Inside Marians Vol 1 Edition 9.png" alt="Newsletter Issue 6">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/zmzn/','_self')">
-  <img src="Inside Marians APR.png" alt="Newsletter Issue 6">
-</div>
-
-<div class="newsletter-card" onclick="window.open('https://anyflip.com/gidmt/alfn/','_self')">
-  <img src="Inside Marians MAY.png" alt="Newsletter Issue 6">
-</div>
-
-</div>
+      <div class="newsletter-library-footer">
+        <span id="newsletter-result-count" class="newsletter-result-count"></span>
+        <button id="newsletter-load-more" class="library-btn" type="button">
+          Load More Editions
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- JOIN + CONTACT -->
-<section id="join" class="bottom-section reveal">
-<div class="bottom-grid">
+<section id="join" class="bottom-section glass reveal">
+  <div>
+    <h3>Join Our Leo Journey</h3>
+    <p>Be a part of a movement that serves with heart and leads with purpose.</p>
 
-<div>
-<h3>Join Our Leo Journey</h3>
-<p>Be a part of a movement that serves with heart and leads with purpose.</p>
-<button onclick="location.href='https://forms.gle/MKz8EkJR8EeLBGyM8'"
-style="padding:14px 36px;border-radius:50px;border:none;font-weight:700;cursor:pointer;">
-Join Now
-</button>
-</div>
+    <button class="join-btn" onclick="location.href='https://forms.gle/MKz8EkJR8EeLBGyM8'">
+      Join Now
+    </button>
+  </div>
 
-<div>
-<h3>Contact Us</h3>
-<p>Email: leoclubmataramarians@gmail.com</p>
-<div class="contact-icons">
-<a href="https://www.facebook.com/profile.php?id=100095294208668"><i class="fab fa-facebook"></i></a>
-<a href="https://www.instagram.com/leos_of_matara_marians?utm_source=qr&igsh=aXRmMHk5dm52b2w3"><i class="fab fa-instagram"></i></a>
-<a href="https://www.linkedin.com/company/leo-club-of-matara-marians?trk=blended-typeahead"><i class="fab fa-linkedin"></i></a>
-</div>
-</div>
+  <div>
+    <h3>Contact Us</h3>
+    <p>Email: leoclubmataramarians@gmail.com</p>
 
-</div>
+    <div class="contact-icons">
+      <a href="https://www.facebook.com/profile.php?id=100095294208668" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+
+      <a href="https://www.instagram.com/leos_of_matara_marians?utm_source=qr&igsh=aXRmMHk5dm52b2w3" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/company/leo-club-of-matara-marians?trk=blended-typeahead" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<footer>© 2025 Leo Club of Matara Marians</footer>
+<footer>© 2026 Leo Club of Matara Marians</footer>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000;">
-  <button onclick="closeLightbox()" style="position:absolute; top:20px; right:30px; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&times;</button>
-  <button onclick="prevImage()" style="position:absolute; left:20px; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&#10094;</button>
-  <img id="lightbox-img" src="" style="max-width:90%; max-height:90%; border-radius:10px;">
-  <button onclick="nextImage()" style="position:absolute; right:20px; font-size:30px; color:white; background:none; border:none; cursor:pointer;">&#10095;</button>
+<div id="lightbox" aria-hidden="true">
+  <button class="lightbox-btn lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+  <button class="lightbox-btn lightbox-prev" onclick="prevImage()" aria-label="Previous image">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <img id="lightbox-img" src="" alt="Project gallery image">
+
+  <button class="lightbox-btn lightbox-next" onclick="nextImage()" aria-label="Next image">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
 </div>
 
 <script>
-/* SCROLL ANIMATION */
-const reveals = document.querySelectorAll(".reveal");
-window.addEventListener("scroll", () => {
-  reveals.forEach(r => {
-    const top = r.getBoundingClientRect().top;
-    if (top < window.innerHeight - 100) r.classList.add("active");
+/* MOBILE NAVIGATION */
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector("nav");
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = nav.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen);
+  menuToggle.innerHTML = isOpen
+    ? '<i class="fa-solid fa-xmark"></i>'
+    : '<i class="fa-solid fa-bars"></i>';
+});
+
+nav.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    nav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
   });
 });
 
+/* SCROLL REVEAL */
+const reveals = document.querySelectorAll(".reveal");
+
+const revealObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("active");
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: "0px 0px -60px 0px"
+});
+
+reveals.forEach(item => revealObserver.observe(item));
+
+
+/* =========================================================
+   LIVE ANIMATIONS + DATA-DRIVEN SECTIONS
+   ========================================================= */
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Scroll progress */
+const scrollProgress = document.querySelector(".scroll-progress");
+
+function updateScrollProgress() {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  scrollProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+window.addEventListener("scroll", updateScrollProgress, { passive: true });
+window.addEventListener("resize", updateScrollProgress);
+updateScrollProgress();
+
+/* Soft cursor glow */
+const cursorGlow = document.querySelector(".cursor-glow");
+
+if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+  window.addEventListener("pointermove", event => {
+    cursorGlow.style.left = `${event.clientX}px`;
+    cursorGlow.style.top = `${event.clientY}px`;
+    cursorGlow.style.opacity = "1";
+  }, { passive: true });
+
+  document.documentElement.addEventListener("mouseleave", () => {
+    cursorGlow.style.opacity = "0";
+  });
+}
+
+/* Active navigation section */
+const navLinks = [...document.querySelectorAll("nav a[href^='#']")];
+const navSections = navLinks
+  .map(link => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+const activeNavObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    navLinks.forEach(link => {
+      link.classList.toggle(
+        "active-link",
+        link.getAttribute("href") === `#${entry.target.id}`
+      );
+    });
+  });
+}, {
+  rootMargin: "-35% 0px -55% 0px",
+  threshold: 0
+});
+
+navSections.forEach(section => activeNavObserver.observe(section));
+
+/* Hero image parallax */
+const heroWrapper = document.querySelector(".hero-image-wrapper");
+
+if (heroWrapper && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+  heroWrapper.addEventListener("pointermove", event => {
+    const rect = heroWrapper.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    heroWrapper.style.transform =
+      `perspective(1400px) rotateX(${(-y * 2.8).toFixed(2)}deg) rotateY(${(x * 3.8).toFixed(2)}deg)`;
+  });
+
+  heroWrapper.addEventListener("pointerleave", () => {
+    heroWrapper.style.transform = "perspective(1400px) rotateX(0deg) rotateY(0deg)";
+  });
+}
+
+/*
+  CURRENT BOARD 2026/27
+  Replace "Name to be added" and add image filenames when ready.
+  Example image value: "new-president.jpg"
+*/
+const currentBoardMembers = [
+  {
+    board: "executive",
+    role: "President",
+    name: "Name to be added",
+    image: "",
+    initials: "P"
+  },
+  {
+    board: "executive",
+    role: "Vice President",
+    name: "Name to be added",
+    image: "",
+    initials: "VP"
+  },
+  {
+    board: "executive",
+    role: "Secretary",
+    name: "Name to be added",
+    image: "",
+    initials: "S"
+  },
+  {
+    board: "executive",
+    role: "Treasurer",
+    name: "Name to be added",
+    image: "",
+    initials: "T"
+  },
+  {
+    board: "executive",
+    role: "Assistant Secretary",
+    name: "Name to be added",
+    image: "",
+    initials: "AS"
+  },
+  {
+    board: "executive",
+    role: "Assistant Treasurer",
+    name: "Name to be added",
+    image: "",
+    initials: "AT"
+  },
+  {
+    board: "directors",
+    role: "Director of Membership",
+    name: "Name to be added",
+    image: "",
+    initials: "M"
+  },
+  {
+    board: "directors",
+    role: "Director of Public Relations",
+    name: "Name to be added",
+    image: "",
+    initials: "PR"
+  },
+  {
+    board: "directors",
+    role: "Director of Service",
+    name: "Name to be added",
+    image: "",
+    initials: "SV"
+  },
+  {
+    board: "directors",
+    role: "Director of Editorial",
+    name: "Name to be added",
+    image: "",
+    initials: "ED"
+  }
+];
+
+const currentBoardGrid = document.getElementById("current-board-grid");
+const boardTabs = [...document.querySelectorAll(".board-tab")];
+
+function renderCurrentBoard(boardName = "executive") {
+  const members = currentBoardMembers.filter(member => member.board === boardName);
+
+  currentBoardGrid.innerHTML = members.map(member => {
+    const photo = member.image
+      ? `<img src="${member.image}" alt="${member.role} ${member.name}">`
+      : `<span class="member-initials" aria-hidden="true">${member.initials}</span>`;
+
+    const pendingClass = member.name === "Name to be added" ? "pending-name" : "";
+
+    return `
+      <article class="current-member-card interactive-tilt">
+        <div class="current-member-photo">${photo}</div>
+        <div class="current-member-info">
+          <h4>${member.role}</h4>
+          <p class="${pendingClass}">${member.name}</p>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  initInteractiveTilt(currentBoardGrid.querySelectorAll(".interactive-tilt"));
+}
+
+boardTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    boardTabs.forEach(item => {
+      const isActive = item === tab;
+      item.classList.toggle("active", isActive);
+      item.setAttribute("aria-selected", String(isActive));
+    });
+
+    renderCurrentBoard(tab.dataset.boardTarget);
+  });
+});
+
+renderCurrentBoard();
+
+/*
+  NEWSLETTER LIBRARY
+  Add each new edition as a new object at the TOP of this array.
+  The first item automatically becomes the large featured edition.
+*/
+const newsletterIssues = [
+  {
+    title: "Inside Marians",
+    edition: "Edition 11",
+    image: "Inside Marians MAY.png",
+    url: "https://anyflip.com/gidmt/alfn/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 10",
+    image: "Inside Marians APR.png",
+    url: "https://anyflip.com/gidmt/zmzn/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 9",
+    image: "Inside Marians Vol 1 Edition 9.png",
+    url: "https://anyflip.com/gidmt/uxrl/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 8",
+    image: "Inside Marians Vol 1 Edition 8.png",
+    url: "https://anyflip.com/gidmt/resd/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 7",
+    image: "Inside Marians Vol 1 Edition 7.png",
+    url: "https://anyflip.com/gidmt/mbyq/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 6",
+    image: "Inside Marians DEC.png",
+    url: "https://anyflip.com/gidmt/hsbx/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 5",
+    image: "Inside Marians NOV.png",
+    url: "https://anyflip.com/gidmt/mwzi/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 4",
+    image: "INSIDE MARIANS-OCT.png",
+    url: "https://anyflip.com/gidmt/psft/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 3",
+    image: "INSIDE MARIANS-SEP.png",
+    url: "https://anyflip.com/gidmt/lzne/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 2",
+    image: "MARIANS INSIDE.png",
+    url: "https://anyflip.com/gidmt/mevl/"
+  },
+  {
+    title: "Inside Marians",
+    edition: "Edition 1",
+    image: "IME1V1.png",
+    url: "https://anyflip.com/gidmt/tzgn/"
+  }
+];
+
+const newsletterFeatured = document.getElementById("newsletter-featured");
+const newsletterGrid = document.getElementById("newsletter-grid");
+const newsletterSearchInput = document.getElementById("newsletter-search-input");
+const newsletterLoadMore = document.getElementById("newsletter-load-more");
+const newsletterResultCount = document.getElementById("newsletter-result-count");
+
+const NEWSLETTER_PAGE_SIZE = 8;
+let newsletterVisibleCount = NEWSLETTER_PAGE_SIZE;
+let newsletterQuery = "";
+
+function renderFeaturedNewsletter() {
+  const latest = newsletterIssues[0];
+
+  newsletterFeatured.innerHTML = `
+    <div class="featured-cover-wrap">
+      <img class="featured-cover" src="${latest.image}" alt="${latest.title} ${latest.edition}">
+    </div>
+
+    <div class="featured-copy">
+      <span class="featured-label">
+        <i class="fa-solid fa-sparkles"></i>
+        Latest Edition
+      </span>
+      <h3>${latest.title}</h3>
+      <p>${latest.edition}</p>
+      <a class="featured-open-btn" href="${latest.url}">
+        Read the Latest Edition
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+  `;
+}
+
+function getFilteredNewsletterArchive() {
+  const archive = newsletterIssues.slice(1);
+  const query = newsletterQuery.trim().toLowerCase();
+
+  if (!query) return archive;
+
+  return archive.filter(issue =>
+    `${issue.title} ${issue.edition}`.toLowerCase().includes(query)
+  );
+}
+
+function renderNewsletterArchive() {
+  const filtered = getFilteredNewsletterArchive();
+  const visible = filtered.slice(0, newsletterVisibleCount);
+
+  if (!visible.length) {
+    newsletterGrid.innerHTML = `
+      <div class="newsletter-empty">
+        No editions match your search.
+      </div>
+    `;
+  } else {
+    newsletterGrid.innerHTML = visible.map(issue => `
+      <a class="newsletter-card glass interactive-tilt" href="${issue.url}">
+        <img src="${issue.image}" alt="${issue.title} ${issue.edition}">
+        <div class="newsletter-card-meta">
+          <strong>${issue.title}</strong>
+          <span>${issue.edition}</span>
+        </div>
+      </a>
+    `).join("");
+  }
+
+  newsletterResultCount.textContent =
+    `${Math.min(visible.length, filtered.length)} of ${filtered.length} archived editions`;
+
+  newsletterLoadMore.hidden = visible.length >= filtered.length;
+  initInteractiveTilt(newsletterGrid.querySelectorAll(".interactive-tilt"));
+}
+
+newsletterSearchInput.addEventListener("input", event => {
+  newsletterQuery = event.target.value;
+  newsletterVisibleCount = NEWSLETTER_PAGE_SIZE;
+  renderNewsletterArchive();
+});
+
+newsletterLoadMore.addEventListener("click", () => {
+  newsletterVisibleCount += NEWSLETTER_PAGE_SIZE;
+  renderNewsletterArchive();
+});
+
+/* Lightweight pointer tilt + live glass reflection */
+function initInteractiveTilt(elements) {
+  if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
+
+  elements.forEach(card => {
+    if (card.dataset.tiltReady === "true") return;
+    card.dataset.tiltReady = "true";
+
+    card.addEventListener("pointermove", event => {
+      const rect = card.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width;
+      const py = (event.clientY - rect.top) / rect.height;
+
+      const rotateY = (px - 0.5) * 7;
+      const rotateX = (0.5 - py) * 6;
+
+      card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+      card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+      card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
+      card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+      card.style.setProperty("--mx", "50%");
+      card.style.setProperty("--my", "50%");
+    });
+  });
+}
+
+document.querySelectorAll(".project-card").forEach(card => {
+  card.classList.add("interactive-tilt");
+});
+
+initInteractiveTilt(document.querySelectorAll(".project-card"));
+renderFeaturedNewsletter();
+renderNewsletterArchive();
+
+
+/* PROJECT LIGHTBOX */
 const projectImages = {
   project1: ['holy3.jpg', 'holy2.jpg', 'holy4.jpg', 'holy6.jpg', 'holy1.jpg', 'holy5.jpg'],
   project2: ['ff1.jpg', 'ff2.jpg', 'ff3.jpg', 'ff4.jpg', 'ff5.jpg'],
@@ -585,28 +2904,56 @@ let currentImages = [];
 let currentIndex = 0;
 
 function openLightbox(project) {
+  if (!projectImages[project]) return;
+
   currentImages = projectImages[project];
   currentIndex = 0;
-  document.getElementById('lightbox').style.display = 'flex';
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightbox-img");
+
+  lightbox.style.display = "flex";
+  lightbox.setAttribute("aria-hidden", "false");
+  lightboxImage.src = currentImages[currentIndex];
+  document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
+  const lightbox = document.getElementById("lightbox");
+
+  lightbox.style.display = "none";
+  lightbox.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 }
 
 function nextImage() {
+  if (!currentImages.length) return;
+
   currentIndex = (currentIndex + 1) % currentImages.length;
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+  document.getElementById("lightbox-img").src = currentImages[currentIndex];
 }
 
 function prevImage() {
+  if (!currentImages.length) return;
+
   currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  document.getElementById('lightbox-img').src = currentImages[currentIndex];
+  document.getElementById("lightbox-img").src = currentImages[currentIndex];
 }
+
+document.getElementById("lightbox").addEventListener("click", event => {
+  if (event.target.id === "lightbox") closeLightbox();
+});
+
+document.addEventListener("keydown", event => {
+  const lightbox = document.getElementById("lightbox");
+
+  if (lightbox.style.display !== "flex") return;
+
+  if (event.key === "Escape") closeLightbox();
+  if (event.key === "ArrowRight") nextImage();
+  if (event.key === "ArrowLeft") prevImage();
+});
 </script>
 
 </body>
 </html>
-
-
