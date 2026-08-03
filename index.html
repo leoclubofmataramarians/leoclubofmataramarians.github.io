@@ -4,12 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#eaf4ff" />
+<link rel="preload" as="image" href="GroupPhoto.jpg" fetchpriority="high">
 <title>Leo Club of Matara Marians</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
 <style>
 :root {
@@ -2112,12 +2114,506 @@ nav a:last-child {
   }
 }
 
+
+/* =========================================================
+   PERFORMANCE PATCH — SAME BLUE GLASS DESIGN
+   ========================================================= */
+
+/* Reserve space and skip off-screen rendering without altering layout. */
+.section,
+.bottom-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+.project-card,
+.current-member-card,
+.newsletter-card,
+.about-photos img {
+  contain: layout paint style;
+}
+
+/*
+  The original generic 24px backdrop blur was applied to almost every
+  card and was the biggest desktop paint cost. The same glass appearance
+  is retained through a more opaque layered surface, while real blur is
+  kept only where it is visually most noticeable.
+*/
+.glass {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.91), rgba(220,239,255,0.70));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+header {
+  backdrop-filter: blur(12px) saturate(125%);
+  -webkit-backdrop-filter: blur(12px) saturate(125%);
+}
+
+.current-member-info,
+.member-overlay {
+  background: linear-gradient(145deg, rgba(9,42,88,0.68), rgba(9,42,88,0.48));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#lightbox {
+  backdrop-filter: blur(16px) saturate(115%);
+  -webkit-backdrop-filter: blur(16px) saturate(115%);
+}
+
+/* Fixed blurred layers are costly while scrolling; radial gradients
+   preserve the look without filter-based repainting. */
+body::before,
+body::after,
+.cursor-glow,
+.ambient-orb {
+  filter: none;
+}
+
+.cursor-glow {
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+
+.scroll-progress {
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.ambient-orb,
+.ambient-ring,
+.hero::before,
+.hero::after,
+.leadership-shell::after,
+.newsletter-featured::after {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Pause decorative motion only while the user is actively scrolling.
+   Animations continue normally when scrolling stops. */
+body.is-scrolling .ambient-orb,
+body.is-scrolling .ambient-ring,
+body.is-scrolling .hero::before,
+body.is-scrolling .hero::after,
+body.is-scrolling .leadership-shell::after,
+body.is-scrolling .newsletter-featured::after,
+body.page-hidden .ambient-orb,
+body.page-hidden .ambient-ring,
+body.page-hidden .hero::before,
+body.page-hidden .hero::after,
+body.page-hidden .leadership-shell::after,
+body.page-hidden .newsletter-featured::after,
+body.page-hidden .featured-cover {
+  animation-play-state: paused !important;
+}
+
+/* Current and every Past EXCO category now use the exact same grid. */
+.current-board-grid,
+.past-member-grid,
+.leadership-member-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.current-member-card,
+.current-member-card:nth-child(1),
+.current-member-card:nth-child(2),
+.past-member-grid .current-member-card,
+.past-member-grid .current-member-card:nth-child(1),
+.past-member-grid .current-member-card:nth-child(2) {
+  grid-column: auto;
+  width: 100%;
+  min-height: 350px;
+}
+
+.archive-member-card {
+  filter: saturate(0.82);
+  transition:
+    filter 0.35s ease,
+    transform 0.35s cubic-bezier(.2,.75,.2,1),
+    box-shadow 0.35s ease;
+}
+
+.archive-member-card:hover {
+  filter: saturate(1);
+}
+
+.past-leadership-content {
+  contain: layout paint;
+}
+
+.past-leadership:not([open]) .past-leadership-content {
+  display: none;
+}
+
+/* Keep tilt and parallax GPU-composited. */
+.hero-image-wrapper,
+.project-card.interactive-tilt,
+.current-member-card.interactive-tilt,
+.newsletter-card.interactive-tilt {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.project-card.interactive-tilt,
+.current-member-card.interactive-tilt,
+.newsletter-card.interactive-tilt {
+  transition:
+    transform 0.18s ease-out,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Reduce painting work on large media while preserving dimensions. */
+.hero img,
+.project-card img,
+.current-member-photo img,
+.about-photos img,
+.newsletter-card img,
+.featured-cover {
+  image-rendering: auto;
+  transform: translateZ(0);
+}
+
+/* Avoid long off-screen transition layers. */
+.reveal.active {
+  will-change: auto;
+}
+
+@media (max-width: 1120px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .current-member-card,
+  .current-member-card:nth-child(1),
+  .current-member-card:nth-child(2),
+  .past-member-grid .current-member-card {
+    min-height: 360px;
+  }
+
+  .section,
+  .bottom-section {
+    contain-intrinsic-size: 720px;
+  }
+
+  header {
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+  }
+}
+
+@media (max-width: 560px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .current-member-card,
+  .current-member-card:nth-child(1),
+  .current-member-card:nth-child(2),
+  .past-member-grid .current-member-card {
+    min-height: 410px;
+  }
+
+  .past-leadership summary {
+    padding: 22px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .project-card.interactive-tilt,
+  .current-member-card.interactive-tilt,
+  .newsletter-card.interactive-tilt,
+  .hero-image-wrapper {
+    transform: none !important;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP STABILITY HOTFIX
+   Preserves the blue/white glass design while removing the
+   rendering paths that can freeze hosted desktop pages.
+   ========================================================= */
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+/* Real-time backdrop blur on large/fixed elements is disabled.
+   Layered translucent gradients, borders, highlights and shadows
+   preserve the same glassmorphism appearance. */
+*,
+*::before,
+*::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.glass,
+header,
+nav,
+.member-overlay,
+.current-member-info,
+#lightbox,
+.lightbox-btn,
+.contact-icons a,
+.newsletter-search {
+  background-image:
+    linear-gradient(145deg, rgba(255,255,255,0.94), rgba(218,238,255,0.76)) !important;
+  border-color: rgba(255,255,255,0.92) !important;
+}
+
+header {
+  background-color: rgba(239,247,255,0.96) !important;
+}
+
+.member-overlay,
+.current-member-info {
+  color: #fff;
+  background-image:
+    linear-gradient(145deg, rgba(8,42,89,0.90), rgba(12,66,132,0.78)) !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+
+/* Remove fixed pointer-following paint work. */
+.cursor-glow {
+  display: none !important;
+}
+
+/* Keep the same decorative blue shapes, but make them static.
+   Infinite animations on large fixed elements were a major source
+   of desktop compositor pressure. */
+.ambient-orb,
+.ambient-ring,
+.hero::before,
+.hero::after,
+.leadership-shell::after,
+.newsletter-featured::after,
+.featured-cover {
+  animation: none !important;
+  will-change: auto !important;
+}
+
+.ambient-orb,
+body::before,
+body::after,
+.featured-cover-wrap::before {
+  filter: none !important;
+}
+
+.orb-one { transform: translate3d(0, 0, 0); }
+.orb-two { transform: translate3d(0, 0, 0); }
+.orb-three { transform: translate3d(0, 0, 0); }
+
+.featured-cover {
+  transform: rotateY(-5deg) rotateX(1deg);
+}
+
+/* Disable pointer-driven 3D transforms while keeping premium hover motion. */
+.project-card.interactive-tilt,
+.current-member-card.interactive-tilt,
+.newsletter-card.interactive-tilt,
+.hero-image-wrapper {
+  transform: translateZ(0) !important;
+  will-change: auto !important;
+}
+
+.project-card.interactive-tilt:hover,
+.current-member-card.interactive-tilt:hover,
+.newsletter-card.interactive-tilt:hover {
+  transform: translate3d(0, -6px, 0) !important;
+}
+
+/* Stop radial reflection pseudo-elements that update with pointer position. */
+.project-card.interactive-tilt::before,
+.current-member-card.interactive-tilt::before,
+.newsletter-card.interactive-tilt::before {
+  display: none !important;
+}
+
+/* Use only compositor-friendly hover/reveal transitions. */
+.project-card,
+.current-member-card,
+.newsletter-card,
+.about-photos img,
+.join-btn,
+.contact-icons a,
+nav a {
+  transition-property: transform, opacity !important;
+  transition-duration: 0.28s !important;
+}
+
+.project-card:hover,
+.current-member-card:hover,
+.newsletter-card:hover {
+  box-shadow: 0 16px 42px rgba(31,91,164,0.12) !important;
+}
+
+/* Off-screen sections are skipped by the renderer until needed. */
+.section,
+.bottom-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+#about,
+#projects,
+#execo,
+#newsletter,
+#join {
+  contain: layout style paint;
+}
+
+/* Cards are isolated so repaints do not invalidate the full page. */
+.project-card,
+.current-member-card,
+.newsletter-card,
+.about-photos img {
+  contain: layout paint style;
+}
+
+/* Stable media boxes reduce layout shifts while images decode. */
+.hero img,
+.project-card img,
+.current-member-photo img,
+.about-photos img,
+.newsletter-card img,
+.featured-cover {
+  aspect-ratio: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.about-photos img {
+  aspect-ratio: 4 / 3;
+}
+
+.project-card img {
+  aspect-ratio: 3 / 2;
+}
+
+.current-member-photo img {
+  aspect-ratio: 4 / 5;
+}
+
+.newsletter-card img,
+.featured-cover {
+  aspect-ratio: 0.72;
+}
+
+/* Keep progress animation on the compositor only. */
+.scroll-progress {
+  width: 100% !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* One-time reveal remains, with a shorter compositor-only transition. */
+.reveal {
+  transition:
+    opacity 0.55s cubic-bezier(.2,.75,.2,1),
+    transform 0.55s cubic-bezier(.2,.75,.2,1) !important;
+}
+
+.reveal.active {
+  will-change: auto;
+}
+
+/* The Current and every Past EXCO category use exactly the same grid. */
+.current-board-grid,
+.past-member-grid,
+.leadership-member-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+.current-member-card,
+.current-member-card:nth-child(1),
+.current-member-card:nth-child(2),
+.past-member-grid .current-member-card,
+.past-member-grid .current-member-card:nth-child(1),
+.past-member-grid .current-member-card:nth-child(2) {
+  grid-column: auto !important;
+  width: 100% !important;
+  min-height: 350px !important;
+}
+
+.past-leadership:not([open]) .past-leadership-content {
+  display: none !important;
+}
+
+/* Avoid rendering hidden lightbox content. */
+#lightbox[aria-hidden="true"] {
+  content-visibility: hidden;
+}
+
+@media (max-width: 1120px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 840px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .section,
+  .bottom-section {
+    contain-intrinsic-size: auto 720px;
+  }
+}
+
+@media (max-width: 560px) {
+  .current-board-grid,
+  .past-member-grid,
+  .leadership-member-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .current-member-card,
+  .current-member-card:nth-child(1),
+  .current-member-card:nth-child(2),
+  .past-member-grid .current-member-card {
+    min-height: 410px !important;
+  }
+}
+
 </style>
 </head>
 
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
-<div class="cursor-glow" aria-hidden="true"></div>
 <div class="ambient-layer" aria-hidden="true">
   <span class="ambient-orb orb-one"></span>
   <span class="ambient-orb orb-two"></span>
@@ -2127,7 +2623,7 @@ nav a:last-child {
 </div>
 
 <header>
-  <h1>Leo Club of Matara Marians <img src="LCMM Logo.png" width="35" alt="LCMM Logo"></h1>
+  <h1>Leo Club of Matara Marians <img src="LCMM Logo.png" alt="LCMM Logo" decoding="async" width="35" height="35" decoding="async"></h1>
 
   <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
     <i class="fa-solid fa-bars"></i>
@@ -2150,7 +2646,7 @@ nav a:last-child {
   </div>
 
   <div class="hero-image-wrapper glass">
-    <img src="GroupPhoto.jpg" alt="Group Photo">
+    <img src="GroupPhoto.jpg" alt="Group Photo" fetchpriority="high" width="1600" height="900" decoding="async" fetchpriority="high">
   </div>
 </section>
 
@@ -2177,12 +2673,12 @@ nav a:last-child {
     </div>
 
     <div class="about-photos">
-      <img src="about1.jpg" alt="About Photo 1">
-      <img src="about2.jpg" alt="About Photo 2">
-      <img src="about3.jpg" alt="About Photo 3">
-      <img src="about4.jpg" alt="About Photo 4">
-      <img src="about5.jpg" alt="About Photo 5">
-      <img src="about6.jpg" alt="About Photo 6">
+      <img src="about1.jpg" alt="About Photo 1" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="about2.jpg" alt="About Photo 2" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="about3.jpg" alt="About Photo 3" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="about4.jpg" alt="About Photo 4" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="about5.jpg" alt="About Photo 5" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="about6.jpg" alt="About Photo 6" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
     </div>
   </div>
 </section>
@@ -2193,49 +2689,49 @@ nav a:last-child {
 
   <div class="project-grid">
     <div class="glass project-card" onclick="openLightbox('project1')">
-      <img src="holy3.jpg" alt="Colours of Love Project">
+      <img src="holy3.jpg" alt="Colours of Love Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Colours of Love – Namasthe Mathota</h3>
       <p>A celebration of unity beyond boundaries, spreading joy, harmony, and cultural togetherness.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project2')">
-      <img src="ff1.jpg" alt="Frosty Fest 24 Project">
+      <img src="ff1.jpg" alt="Frosty Fest 24 Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Frosty Fest ’24</h3>
       <p>A heartwarming Christmas festival sharing hope, smiles, and festive cheer.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project3')">
-      <img src="btth1.jpg" alt="Back to the Shores Project">
+      <img src="btth1.jpg" alt="Back to the Shores Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Back to the Shores</h3>
       <p>An environmental initiative restoring coastal beauty and protecting marine ecosystems.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project4')">
-      <img src="np1.jpg" alt="NutriPulse Project">
+      <img src="np1.jpg" alt="NutriPulse Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>NutriPulse</h3>
       <p>Promoting healthy nutrition and awareness for a stronger future generation.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project5')">
-      <img src="ffmf1.jpg" alt="Melodies of Hope Project">
+      <img src="ffmf1.jpg" alt="Melodies of Hope Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Frosty Fest - Melodies of Hope</h3>
       <p>A soulful musical evening of prayer, compassion, and togetherness.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project6')">
-      <img src="pc.jpeg" alt="Pixel Craft - Phase II">
+      <img src="pc.jpeg" alt="Pixel Craft - Phase II" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Pixel Craft - Phase II</h3>
       <p>Empowering Leos Through Digital Design</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project7')">
-      <img src="sp.jpeg" alt="Senehe Piyasa">
+      <img src="sp.jpeg" alt="Senehe Piyasa" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Senehe Piyasa</h3>
       <p>Compassion in Action for Inclusive Communities</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project8')">
-      <img src="k.jpg" alt="Kaalartha">
+      <img src="k.jpg" alt="Kaalartha" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Kaalaartha</h3>
       <p>Strengthening Education Through Infrastructure</p>
     </div>
@@ -2263,12 +2759,8 @@ nav a:last-child {
       </div>
     </div>
 
-    <!--
-      Add the new 2026/27 names and image paths in the currentBoardMembers
-      array near the bottom of this HTML file. Empty image values automatically
-      use the clean blue initials placeholder.
-    -->
-    <div id="current-board-grid" class="current-board-grid" aria-live="polite"></div>
+    <!-- Update currentBoardMembers near the bottom of this file. -->
+    <div id="current-board-grid" class="current-board-grid leadership-member-grid" aria-live="polite"></div>
   </div>
 
   <details class="past-leadership glass">
@@ -2283,53 +2775,60 @@ nav a:last-child {
     <div class="past-leadership-content">
       <div class="past-board-block">
         <h3>Executive Committee 2025/26</h3>
+        <div class="past-member-grid leadership-member-grid">
 
-        <div class="past-member-grid">
-          <article class="member-card past-card">
-            <img src="president.jpg" alt="President Leo Bisandi Mansari">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="president.jpg" alt="President Leo Bisandi Mansari" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>President</h4>
-              <span>Leo Bisandi Mansari</span>
+              <p>Leo Bisandi Mansari</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="vp.jpg" alt="Vice President Leo Tharunya Dahanayaka">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="vp.jpg" alt="Vice President Leo Tharunya Dahanayaka" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Vice President</h4>
-              <span>Leo Tharunya Dahanayaka</span>
+              <p>Leo Tharunya Dahanayaka</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="secretary.jpg" alt="Secretary Leo Hashma Humam">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="secretary.jpg" alt="Secretary Leo Hashma Humam" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Secretary</h4>
-              <span>Leo Hashma Humam</span>
+              <p>Leo Hashma Humam</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="treasurer.jpg" alt="Treasurer Leo Dahami Vihanga">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="treasurer.jpg" alt="Treasurer Leo Dahami Vihanga" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Treasurer</h4>
-              <span>Leo Dahami Vihanga</span>
+              <p>Leo Dahami Vihanga</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Assistant Secretary</h4>
-              <span>Leo Senudi Sellahewa</span>
+              <p>Leo Senudi Sellahewa</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Assistant Treasurer</h4>
-              <span>Leo Rivindi Risindini</span>
+              <p>Leo Rivindi Risindini</p>
             </div>
           </article>
         </div>
@@ -2337,40 +2836,89 @@ nav a:last-child {
 
       <div class="past-board-block">
         <h3>Director Board 2025/26</h3>
+        <div class="past-member-grid leadership-member-grid">
 
-        <div class="past-member-grid">
-          <article class="member-card past-card">
-            <img src="Mihili Manjuswara1.jpg" alt="Director of Membership & Retention Growth Leo Mihili Manjuswara">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Mihili Manjuswara1.jpg" alt="Director of Membership Leo Mihili Manjuswara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Director of Membership</h4>
-              <span>Leo Mihili Manjuswara</span>
+              <p>Leo Mihili Manjuswara</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="Tharushi Omaya.jpg" alt="Director of Public Relations Leo Tharushi Omaya">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Tharushi Omaya.jpg" alt="Director of PR Leo Tharushi Omaya" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Director of PR</h4>
-              <span>Leo Tharushi Omaya</span>
+              <p>Leo Tharushi Omaya</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="Thisathma Weerasekara.jpg" alt="Director of Service & Joint Projects Leo Thisathma Weerasekara">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Thisathma Weerasekara.jpg" alt="Director of Service Leo Thisathma Weerasekara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Director of Service</h4>
-              <span>Leo Thisathma Weerasekara</span>
+              <p>Leo Thisathma Weerasekara</p>
             </div>
           </article>
-
-          <article class="member-card past-card">
-            <img src="Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara">
-            <div class="member-overlay">
+          <article class="current-member-card archive-member-card interactive-tilt">
+            <div class="current-member-photo">
+              <img src="Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+            </div>
+            <div class="current-member-info">
               <h4>Director of Editorial</h4>
-              <span>Leo Sanuki Dinhara</span>
+              <p>Leo Sanuki Dinhara</p>
             </div>
           </article>
         </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="past-leadership glass lazy-past-archive" data-archive-year="2024/25">
+    <summary>
+      <span>
+        <small>Leadership Archive</small>
+        <strong>Past Committee · 2024/25</strong>
+      </span>
+      <span class="archive-action">View Past Leadership <i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+
+    <div class="past-leadership-content">
+      <div class="past-board-block">
+        <h3>Executive Committee 2024/25</h3>
+        <div class="past-member-grid leadership-member-grid" data-placeholder-board="executive"></div>
+      </div>
+
+      <div class="past-board-block">
+        <h3>Director Board 2024/25</h3>
+        <div class="past-member-grid leadership-member-grid" data-placeholder-board="directors"></div>
+      </div>
+    </div>
+  </details>
+
+  <details class="past-leadership glass lazy-past-archive" data-archive-year="2023/24">
+    <summary>
+      <span>
+        <small>Leadership Archive</small>
+        <strong>Past Committee · 2023/24</strong>
+      </span>
+      <span class="archive-action">View Past Leadership <i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+
+    <div class="past-leadership-content">
+      <div class="past-board-block">
+        <h3>Executive Committee 2023/24</h3>
+        <div class="past-member-grid leadership-member-grid" data-placeholder-board="executive"></div>
+      </div>
+
+      <div class="past-board-block">
+        <h3>Director Board 2023/24</h3>
+        <div class="past-member-grid leadership-member-grid" data-placeholder-board="directors"></div>
       </div>
     </div>
   </details>
@@ -2453,7 +3001,7 @@ nav a:last-child {
     <i class="fa-solid fa-chevron-left"></i>
   </button>
 
-  <img id="lightbox-img" src="" alt="Project gallery image">
+  <img id="lightbox-img" src="" alt="Project gallery image" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
 
   <button class="lightbox-btn lightbox-next" onclick="nextImage()" aria-label="Next image">
     <i class="fa-solid fa-chevron-right"></i>
@@ -2461,498 +3009,406 @@ nav a:last-child {
 </div>
 
 <script>
-/* MOBILE NAVIGATION */
-const menuToggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector("nav");
+(() => {
+  "use strict";
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", isOpen);
-  menuToggle.innerHTML = isOpen
-    ? '<i class="fa-solid fa-xmark"></i>'
-    : '<i class="fa-solid fa-bars"></i>';
-});
+  const qs = (selector, root = document) => root.querySelector(selector);
+  const qsa = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-nav.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    nav.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
-  });
-});
+  /* MOBILE NAVIGATION */
+  const menuToggle = qs(".menu-toggle");
+  const nav = qs("nav");
 
-/* SCROLL REVEAL */
-const reveals = document.querySelectorAll(".reveal");
-
-const revealObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("active");
-      observer.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.12,
-  rootMargin: "0px 0px -60px 0px"
-});
-
-reveals.forEach(item => revealObserver.observe(item));
-
-
-/* =========================================================
-   LIVE ANIMATIONS + DATA-DRIVEN SECTIONS
-   ========================================================= */
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-/* Scroll progress */
-const scrollProgress = document.querySelector(".scroll-progress");
-
-function updateScrollProgress() {
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-  scrollProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
-}
-
-window.addEventListener("scroll", updateScrollProgress, { passive: true });
-window.addEventListener("resize", updateScrollProgress);
-updateScrollProgress();
-
-/* Soft cursor glow */
-const cursorGlow = document.querySelector(".cursor-glow");
-
-if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
-  window.addEventListener("pointermove", event => {
-    cursorGlow.style.left = `${event.clientX}px`;
-    cursorGlow.style.top = `${event.clientY}px`;
-    cursorGlow.style.opacity = "1";
-  }, { passive: true });
-
-  document.documentElement.addEventListener("mouseleave", () => {
-    cursorGlow.style.opacity = "0";
-  });
-}
-
-/* Active navigation section */
-const navLinks = [...document.querySelectorAll("nav a[href^='#']")];
-const navSections = navLinks
-  .map(link => document.querySelector(link.getAttribute("href")))
-  .filter(Boolean);
-
-const activeNavObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-
-    navLinks.forEach(link => {
-      link.classList.toggle(
-        "active-link",
-        link.getAttribute("href") === `#${entry.target.id}`
-      );
+  if (menuToggle && nav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.innerHTML = isOpen
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
     });
-  });
-}, {
-  rootMargin: "-35% 0px -55% 0px",
-  threshold: 0
-});
 
-navSections.forEach(section => activeNavObserver.observe(section));
-
-/* Hero image parallax */
-const heroWrapper = document.querySelector(".hero-image-wrapper");
-
-if (heroWrapper && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
-  heroWrapper.addEventListener("pointermove", event => {
-    const rect = heroWrapper.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-    heroWrapper.style.transform =
-      `perspective(1400px) rotateX(${(-y * 2.8).toFixed(2)}deg) rotateY(${(x * 3.8).toFixed(2)}deg)`;
-  });
-
-  heroWrapper.addEventListener("pointerleave", () => {
-    heroWrapper.style.transform = "perspective(1400px) rotateX(0deg) rotateY(0deg)";
-  });
-}
-
-/*
-  CURRENT BOARD 2026/27
-  Replace "Name to be added" and add image filenames when ready.
-  Example image value: "new-president.jpg"
-*/
-const currentBoardMembers = [
-  {
-    board: "executive",
-    role: "President",
-    name: "Name to be added",
-    image: "",
-    initials: "P"
-  },
-  {
-    board: "executive",
-    role: "Vice President",
-    name: "Name to be added",
-    image: "",
-    initials: "VP"
-  },
-  {
-    board: "executive",
-    role: "Secretary",
-    name: "Name to be added",
-    image: "",
-    initials: "S"
-  },
-  {
-    board: "executive",
-    role: "Treasurer",
-    name: "Name to be added",
-    image: "",
-    initials: "T"
-  },
-  {
-    board: "executive",
-    role: "Assistant Secretary",
-    name: "Name to be added",
-    image: "",
-    initials: "AS"
-  },
-  {
-    board: "executive",
-    role: "Assistant Treasurer",
-    name: "Name to be added",
-    image: "",
-    initials: "AT"
-  },
-  {
-    board: "directors",
-    role: "Director of Membership",
-    name: "Name to be added",
-    image: "",
-    initials: "M"
-  },
-  {
-    board: "directors",
-    role: "Director of Public Relations",
-    name: "Name to be added",
-    image: "",
-    initials: "PR"
-  },
-  {
-    board: "directors",
-    role: "Director of Service",
-    name: "Name to be added",
-    image: "",
-    initials: "SV"
-  },
-  {
-    board: "directors",
-    role: "Director of Editorial",
-    name: "Name to be added",
-    image: "",
-    initials: "ED"
+    nav.addEventListener("click", event => {
+      if (!event.target.closest("a")) return;
+      nav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    });
   }
-];
 
-const currentBoardGrid = document.getElementById("current-board-grid");
-const boardTabs = [...document.querySelectorAll(".board-tab")];
+  /* ONE-TIME REVEALS */
+  const revealItems = qsa(".reveal");
 
-function renderCurrentBoard(boardName = "executive") {
-  const members = currentBoardMembers.filter(member => member.board === boardName);
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add("active");
+        observer.unobserve(entry.target);
+      }
+    }, {
+      threshold: 0.08,
+      rootMargin: "0px 0px -40px 0px"
+    });
 
-  currentBoardGrid.innerHTML = members.map(member => {
-    const photo = member.image
-      ? `<img src="${member.image}" alt="${member.role} ${member.name}">`
-      : `<span class="member-initials" aria-hidden="true">${member.initials}</span>`;
+    revealItems.forEach(item => revealObserver.observe(item));
+  } else {
+    revealItems.forEach(item => item.classList.add("active"));
+  }
 
-    const pendingClass = member.name === "Name to be added" ? "pending-name" : "";
+  /* GPU-ONLY SCROLL PROGRESS */
+  const scrollProgress = qs(".scroll-progress");
+  let scrollFrame = 0;
 
-    return `
-      <article class="current-member-card interactive-tilt">
-        <div class="current-member-photo">${photo}</div>
-        <div class="current-member-info">
+  const drawScrollProgress = () => {
+    scrollFrame = 0;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const value = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    if (scrollProgress) scrollProgress.style.transform = `scaleX(${value})`;
+  };
+
+  const requestScrollProgress = () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(drawScrollProgress);
+  };
+
+  window.addEventListener("scroll", requestScrollProgress, { passive: true });
+  window.addEventListener("resize", requestScrollProgress, { passive: true });
+  drawScrollProgress();
+
+  /* ACTIVE NAVIGATION — SINGLE OBSERVER, NO SCROLL LOOP */
+  const navLinks = qsa('nav a[href^="#"]');
+  const sectionMap = new Map();
+
+  navLinks.forEach(link => {
+    const section = qs(link.getAttribute("href"));
+    if (section) sectionMap.set(section, link);
+  });
+
+  if ("IntersectionObserver" in window && sectionMap.size) {
+    const navObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        navLinks.forEach(link => link.classList.remove("active-link"));
+        sectionMap.get(entry.target)?.classList.add("active-link");
+      }
+    }, {
+      rootMargin: "-38% 0px -54% 0px",
+      threshold: 0
+    });
+
+    sectionMap.forEach((_, section) => navObserver.observe(section));
+  }
+
+  /* CURRENT BOARD */
+  const currentBoardMembers = [
+    { board: "executive", role: "President", name: "Name to be added", image: "", initials: "P" },
+    { board: "executive", role: "Vice President", name: "Name to be added", image: "", initials: "VP" },
+    { board: "executive", role: "Secretary", name: "Name to be added", image: "", initials: "S" },
+    { board: "executive", role: "Treasurer", name: "Name to be added", image: "", initials: "T" },
+    { board: "executive", role: "Assistant Secretary", name: "Name to be added", image: "", initials: "AS" },
+    { board: "executive", role: "Assistant Treasurer", name: "Name to be added", image: "", initials: "AT" },
+    { board: "directors", role: "Director of Membership", name: "Name to be added", image: "", initials: "M" },
+    { board: "directors", role: "Director of Public Relations", name: "Name to be added", image: "", initials: "PR" },
+    { board: "directors", role: "Director of Service", name: "Name to be added", image: "", initials: "SV" },
+    { board: "directors", role: "Director of Editorial", name: "Name to be added", image: "", initials: "ED" }
+  ];
+
+  const currentBoardGrid = qs("#current-board-grid");
+  const boardTabs = qsa(".board-tab");
+
+  const renderCurrentBoard = (boardName = "executive") => {
+    if (!currentBoardGrid) return;
+
+    const fragment = document.createDocumentFragment();
+
+    currentBoardMembers
+      .filter(member => member.board === boardName)
+      .forEach(member => {
+        const card = document.createElement("article");
+        card.className = "current-member-card";
+
+        const photo = document.createElement("div");
+        photo.className = "current-member-photo";
+
+        if (member.image) {
+          const image = new Image(800, 1000);
+          image.src = member.image;
+          image.alt = `${member.role} ${member.name}`;
+          image.loading = "lazy";
+          image.decoding = "async";
+          image.fetchPriority = "low";
+          photo.appendChild(image);
+        } else {
+          const initials = document.createElement("span");
+          initials.className = "member-initials";
+          initials.setAttribute("aria-hidden", "true");
+          initials.textContent = member.initials;
+          photo.appendChild(initials);
+        }
+
+        const info = document.createElement("div");
+        info.className = "current-member-info";
+        info.innerHTML = `
           <h4>${member.role}</h4>
-          <p class="${pendingClass}">${member.name}</p>
-        </div>
-      </article>
-    `;
-  }).join("");
+          <p class="${member.name === "Name to be added" ? "pending-name" : ""}">${member.name}</p>
+        `;
 
-  initInteractiveTilt(currentBoardGrid.querySelectorAll(".interactive-tilt"));
-}
+        card.append(photo, info);
+        fragment.appendChild(card);
+      });
 
-boardTabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    boardTabs.forEach(item => {
-      const isActive = item === tab;
-      item.classList.toggle("active", isActive);
-      item.setAttribute("aria-selected", String(isActive));
+    currentBoardGrid.replaceChildren(fragment);
+  };
+
+  boardTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      boardTabs.forEach(item => {
+        const active = item === tab;
+        item.classList.toggle("active", active);
+        item.setAttribute("aria-selected", String(active));
+      });
+      renderCurrentBoard(tab.dataset.boardTarget);
     });
-
-    renderCurrentBoard(tab.dataset.boardTarget);
   });
-});
 
-renderCurrentBoard();
+  renderCurrentBoard();
 
-/*
-  NEWSLETTER LIBRARY
-  Add each new edition as a new object at the TOP of this array.
-  The first item automatically becomes the large featured edition.
-*/
-const newsletterIssues = [
-  {
-    title: "Inside Marians",
-    edition: "Edition 11",
-    image: "Inside Marians MAY.png",
-    url: "https://anyflip.com/gidmt/alfn/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 10",
-    image: "Inside Marians APR.png",
-    url: "https://anyflip.com/gidmt/zmzn/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 9",
-    image: "Inside Marians Vol 1 Edition 9.png",
-    url: "https://anyflip.com/gidmt/uxrl/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 8",
-    image: "Inside Marians Vol 1 Edition 8.png",
-    url: "https://anyflip.com/gidmt/resd/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 7",
-    image: "Inside Marians Vol 1 Edition 7.png",
-    url: "https://anyflip.com/gidmt/mbyq/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 6",
-    image: "Inside Marians DEC.png",
-    url: "https://anyflip.com/gidmt/hsbx/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 5",
-    image: "Inside Marians NOV.png",
-    url: "https://anyflip.com/gidmt/mwzi/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 4",
-    image: "INSIDE MARIANS-OCT.png",
-    url: "https://anyflip.com/gidmt/psft/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 3",
-    image: "INSIDE MARIANS-SEP.png",
-    url: "https://anyflip.com/gidmt/lzne/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 2",
-    image: "MARIANS INSIDE.png",
-    url: "https://anyflip.com/gidmt/mevl/"
-  },
-  {
-    title: "Inside Marians",
-    edition: "Edition 1",
-    image: "IME1V1.png",
-    url: "https://anyflip.com/gidmt/tzgn/"
-  }
-];
+  /* ADDITIONAL PAST ARCHIVES — CREATED ONLY WHEN OPENED */
+  const placeholderExecutiveRoles = [
+    ["President", "Past President", "P"],
+    ["Vice President", "Past Vice President", "VP"],
+    ["Secretary", "Past Secretary", "S"],
+    ["Treasurer", "Past Treasurer", "T"],
+    ["Assistant Secretary", "Past Assistant Secretary", "AS"],
+    ["Assistant Treasurer", "Past Assistant Treasurer", "AT"],
+    ["Executive Member", "Past Executive Member", "EM"]
+  ];
 
-const newsletterFeatured = document.getElementById("newsletter-featured");
-const newsletterGrid = document.getElementById("newsletter-grid");
-const newsletterSearchInput = document.getElementById("newsletter-search-input");
-const newsletterLoadMore = document.getElementById("newsletter-load-more");
-const newsletterResultCount = document.getElementById("newsletter-result-count");
+  const placeholderDirectorRoles = [
+    ["Director of Membership", "Past Director", "M"],
+    ["Director of Public Relations", "Past Director", "PR"],
+    ["Director of Service", "Past Director", "SV"],
+    ["Director of Editorial", "Past Director", "ED"]
+  ];
 
-const NEWSLETTER_PAGE_SIZE = 8;
-let newsletterVisibleCount = NEWSLETTER_PAGE_SIZE;
-let newsletterQuery = "";
+  qsa(".lazy-past-archive").forEach(archive => {
+    archive.addEventListener("toggle", () => {
+      if (!archive.open || archive.dataset.rendered === "true") return;
 
-function renderFeaturedNewsletter() {
-  const latest = newsletterIssues[0];
+      qsa("[data-placeholder-board]", archive).forEach(grid => {
+        const members = grid.dataset.placeholderBoard === "executive"
+          ? placeholderExecutiveRoles
+          : placeholderDirectorRoles;
 
-  newsletterFeatured.innerHTML = `
-    <div class="featured-cover-wrap">
-      <img class="featured-cover" src="${latest.image}" alt="${latest.title} ${latest.edition}">
-    </div>
+        const fragment = document.createDocumentFragment();
 
-    <div class="featured-copy">
-      <span class="featured-label">
-        <i class="fa-solid fa-sparkles"></i>
-        Latest Edition
-      </span>
-      <h3>${latest.title}</h3>
-      <p>${latest.edition}</p>
-      <a class="featured-open-btn" href="${latest.url}">
-        Read the Latest Edition
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-      </a>
-    </div>
-  `;
-}
+        members.forEach(([role, name, initials]) => {
+          const card = document.createElement("article");
+          card.className = "current-member-card archive-member-card";
+          card.innerHTML = `
+            <div class="current-member-photo">
+              <span class="member-initials" aria-hidden="true">${initials}</span>
+            </div>
+            <div class="current-member-info">
+              <h4>${role}</h4>
+              <p class="pending-name">${name}</p>
+            </div>
+          `;
+          fragment.appendChild(card);
+        });
 
-function getFilteredNewsletterArchive() {
-  const archive = newsletterIssues.slice(1);
-  const query = newsletterQuery.trim().toLowerCase();
+        grid.replaceChildren(fragment);
+      });
 
-  if (!query) return archive;
+      archive.dataset.rendered = "true";
+    });
+  });
 
-  return archive.filter(issue =>
-    `${issue.title} ${issue.edition}`.toLowerCase().includes(query)
-  );
-}
+  /* NEWSLETTER — SAME DESIGN/FUNCTION, INITIALIZED NEAR VIEWPORT */
+  const newsletterIssues = [
+    { title: "Inside Marians", edition: "Edition 11", image: "Inside Marians MAY.png", url: "https://anyflip.com/gidmt/alfn/" },
+    { title: "Inside Marians", edition: "Edition 10", image: "Inside Marians APR.png", url: "https://anyflip.com/gidmt/zmzn/" },
+    { title: "Inside Marians", edition: "Edition 9", image: "Inside Marians Vol 1 Edition 9.png", url: "https://anyflip.com/gidmt/uxrl/" },
+    { title: "Inside Marians", edition: "Edition 8", image: "Inside Marians Vol 1 Edition 8.png", url: "https://anyflip.com/gidmt/resd/" },
+    { title: "Inside Marians", edition: "Edition 7", image: "Inside Marians Vol 1 Edition 7.png", url: "https://anyflip.com/gidmt/mbyq/" },
+    { title: "Inside Marians", edition: "Edition 6", image: "Inside Marians DEC.png", url: "https://anyflip.com/gidmt/hsbx/" },
+    { title: "Inside Marians", edition: "Edition 5", image: "Inside Marians NOV.png", url: "https://anyflip.com/gidmt/mwzi/" },
+    { title: "Inside Marians", edition: "Edition 4", image: "INSIDE MARIANS-OCT.png", url: "https://anyflip.com/gidmt/psft/" },
+    { title: "Inside Marians", edition: "Edition 3", image: "INSIDE MARIANS-SEP.png", url: "https://anyflip.com/gidmt/lzne/" },
+    { title: "Inside Marians", edition: "Edition 2", image: "MARIANS INSIDE.png", url: "https://anyflip.com/gidmt/mevl/" },
+    { title: "Inside Marians", edition: "Edition 1", image: "IME1V1.png", url: "https://anyflip.com/gidmt/tzgn/" }
+  ];
 
-function renderNewsletterArchive() {
-  const filtered = getFilteredNewsletterArchive();
-  const visible = filtered.slice(0, newsletterVisibleCount);
+  const newsletterSection = qs("#newsletter");
+  const newsletterFeatured = qs("#newsletter-featured");
+  const newsletterGrid = qs("#newsletter-grid");
+  const newsletterSearchInput = qs("#newsletter-search-input");
+  const newsletterLoadMore = qs("#newsletter-load-more");
+  const newsletterResultCount = qs("#newsletter-result-count");
 
-  if (!visible.length) {
-    newsletterGrid.innerHTML = `
-      <div class="newsletter-empty">
-        No editions match your search.
+  const PAGE_SIZE = 8;
+  let visibleCount = PAGE_SIZE;
+  let query = "";
+  let newsletterReady = false;
+  let searchTimer = 0;
+
+  const filteredArchive = () => {
+    const archive = newsletterIssues.slice(1);
+    const normalized = query.trim().toLowerCase();
+    return normalized
+      ? archive.filter(issue => `${issue.title} ${issue.edition}`.toLowerCase().includes(normalized))
+      : archive;
+  };
+
+  const renderNewsletterArchive = () => {
+    if (!newsletterGrid) return;
+
+    const filtered = filteredArchive();
+    const visible = filtered.slice(0, visibleCount);
+    const fragment = document.createDocumentFragment();
+
+    if (!visible.length) {
+      const empty = document.createElement("div");
+      empty.className = "newsletter-empty";
+      empty.textContent = "No editions match your search.";
+      fragment.appendChild(empty);
+    } else {
+      visible.forEach(issue => {
+        const card = document.createElement("a");
+        card.className = "newsletter-card glass";
+        card.href = issue.url;
+        card.innerHTML = `
+          <img src="${issue.image}" alt="${issue.title} ${issue.edition}"
+               width="720" height="1000" loading="lazy" decoding="async" fetchpriority="low">
+          <div class="newsletter-card-meta">
+            <strong>${issue.title}</strong>
+            <span>${issue.edition}</span>
+          </div>
+        `;
+        fragment.appendChild(card);
+      });
+    }
+
+    newsletterGrid.replaceChildren(fragment);
+
+    if (newsletterResultCount) {
+      newsletterResultCount.textContent =
+        `${Math.min(visible.length, filtered.length)} of ${filtered.length} archived editions`;
+    }
+
+    if (newsletterLoadMore) {
+      newsletterLoadMore.hidden = visible.length >= filtered.length;
+    }
+  };
+
+  const initializeNewsletter = () => {
+    if (newsletterReady || !newsletterFeatured) return;
+    newsletterReady = true;
+
+    const latest = newsletterIssues[0];
+    newsletterFeatured.innerHTML = `
+      <div class="featured-cover-wrap">
+        <img class="featured-cover" src="${latest.image}"
+             alt="${latest.title} ${latest.edition}"
+             width="720" height="1000" loading="lazy" decoding="async" fetchpriority="low">
+      </div>
+      <div class="featured-copy">
+        <span class="featured-label">
+          <i class="fa-solid fa-sparkles"></i>
+          Latest Edition
+        </span>
+        <h3>${latest.title}</h3>
+        <p>${latest.edition}</p>
+        <a class="featured-open-btn" href="${latest.url}">
+          Read the Latest Edition
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
       </div>
     `;
+
+    renderNewsletterArchive();
+
+    newsletterSearchInput?.addEventListener("input", event => {
+      clearTimeout(searchTimer);
+      searchTimer = window.setTimeout(() => {
+        query = event.target.value;
+        visibleCount = PAGE_SIZE;
+        renderNewsletterArchive();
+      }, 140);
+    });
+
+    newsletterLoadMore?.addEventListener("click", () => {
+      visibleCount += PAGE_SIZE;
+      renderNewsletterArchive();
+    });
+  };
+
+  if (newsletterSection && "IntersectionObserver" in window) {
+    const newsletterObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      initializeNewsletter();
+      newsletterObserver.disconnect();
+    }, { rootMargin: "650px 0px" });
+
+    newsletterObserver.observe(newsletterSection);
   } else {
-    newsletterGrid.innerHTML = visible.map(issue => `
-      <a class="newsletter-card glass interactive-tilt" href="${issue.url}">
-        <img src="${issue.image}" alt="${issue.title} ${issue.edition}">
-        <div class="newsletter-card-meta">
-          <strong>${issue.title}</strong>
-          <span>${issue.edition}</span>
-        </div>
-      </a>
-    `).join("");
+    initializeNewsletter();
   }
 
-  newsletterResultCount.textContent =
-    `${Math.min(visible.length, filtered.length)} of ${filtered.length} archived editions`;
+  /* PROJECT LIGHTBOX */
+  const projectImages = {
+    project1: ["holy3.jpg", "holy2.jpg", "holy4.jpg", "holy6.jpg", "holy1.jpg", "holy5.jpg"],
+    project2: ["ff1.jpg", "ff2.jpg", "ff3.jpg", "ff4.jpg", "ff5.jpg"],
+    project3: ["btth1.jpg", "btth2.jpg"],
+    project4: ["np1.jpg", "np2.jpg", "np3.jpg", "np4.jpg"],
+    project5: ["ffmf2.jpg"]
+  };
 
-  newsletterLoadMore.hidden = visible.length >= filtered.length;
-  initInteractiveTilt(newsletterGrid.querySelectorAll(".interactive-tilt"));
-}
+  const lightbox = qs("#lightbox");
+  const lightboxImage = qs("#lightbox-img");
+  let currentImages = [];
+  let currentIndex = 0;
 
-newsletterSearchInput.addEventListener("input", event => {
-  newsletterQuery = event.target.value;
-  newsletterVisibleCount = NEWSLETTER_PAGE_SIZE;
-  renderNewsletterArchive();
-});
+  window.openLightbox = project => {
+    if (!projectImages[project] || !lightbox || !lightboxImage) return;
+    currentImages = projectImages[project];
+    currentIndex = 0;
+    lightboxImage.src = currentImages[0];
+    lightbox.style.display = "flex";
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
 
-newsletterLoadMore.addEventListener("click", () => {
-  newsletterVisibleCount += NEWSLETTER_PAGE_SIZE;
-  renderNewsletterArchive();
-});
+  window.closeLightbox = () => {
+    if (!lightbox) return;
+    lightbox.style.display = "none";
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
 
-/* Lightweight pointer tilt + live glass reflection */
-function initInteractiveTilt(elements) {
-  if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
+  window.nextImage = () => {
+    if (!currentImages.length || !lightboxImage) return;
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    lightboxImage.src = currentImages[currentIndex];
+  };
 
-  elements.forEach(card => {
-    if (card.dataset.tiltReady === "true") return;
-    card.dataset.tiltReady = "true";
+  window.prevImage = () => {
+    if (!currentImages.length || !lightboxImage) return;
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    lightboxImage.src = currentImages[currentIndex];
+  };
 
-    card.addEventListener("pointermove", event => {
-      const rect = card.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width;
-      const py = (event.clientY - rect.top) / rect.height;
-
-      const rotateY = (px - 0.5) * 7;
-      const rotateX = (0.5 - py) * 6;
-
-      card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
-      card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
-      card.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
-      card.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
-    });
-
-    card.addEventListener("pointerleave", () => {
-      card.style.setProperty("--rx", "0deg");
-      card.style.setProperty("--ry", "0deg");
-      card.style.setProperty("--mx", "50%");
-      card.style.setProperty("--my", "50%");
-    });
+  lightbox?.addEventListener("click", event => {
+    if (event.target === lightbox) window.closeLightbox();
   });
-}
 
-document.querySelectorAll(".project-card").forEach(card => {
-  card.classList.add("interactive-tilt");
-});
-
-initInteractiveTilt(document.querySelectorAll(".project-card"));
-renderFeaturedNewsletter();
-renderNewsletterArchive();
-
-
-/* PROJECT LIGHTBOX */
-const projectImages = {
-  project1: ['holy3.jpg', 'holy2.jpg', 'holy4.jpg', 'holy6.jpg', 'holy1.jpg', 'holy5.jpg'],
-  project2: ['ff1.jpg', 'ff2.jpg', 'ff3.jpg', 'ff4.jpg', 'ff5.jpg'],
-  project3: ['btth1.jpg', 'btth2.jpg'],
-  project4: ['np1.jpg', 'np2.jpg', 'np3.jpg', 'np4.jpg'],
-  project5: ['ffmf2.jpg']
-};
-
-let currentImages = [];
-let currentIndex = 0;
-
-function openLightbox(project) {
-  if (!projectImages[project]) return;
-
-  currentImages = projectImages[project];
-  currentIndex = 0;
-
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImage = document.getElementById("lightbox-img");
-
-  lightbox.style.display = "flex";
-  lightbox.setAttribute("aria-hidden", "false");
-  lightboxImage.src = currentImages[currentIndex];
-  document.body.style.overflow = "hidden";
-}
-
-function closeLightbox() {
-  const lightbox = document.getElementById("lightbox");
-
-  lightbox.style.display = "none";
-  lightbox.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-function nextImage() {
-  if (!currentImages.length) return;
-
-  currentIndex = (currentIndex + 1) % currentImages.length;
-  document.getElementById("lightbox-img").src = currentImages[currentIndex];
-}
-
-function prevImage() {
-  if (!currentImages.length) return;
-
-  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-  document.getElementById("lightbox-img").src = currentImages[currentIndex];
-}
-
-document.getElementById("lightbox").addEventListener("click", event => {
-  if (event.target.id === "lightbox") closeLightbox();
-});
-
-document.addEventListener("keydown", event => {
-  const lightbox = document.getElementById("lightbox");
-
-  if (lightbox.style.display !== "flex") return;
-
-  if (event.key === "Escape") closeLightbox();
-  if (event.key === "ArrowRight") nextImage();
-  if (event.key === "ArrowLeft") prevImage();
-});
+  document.addEventListener("keydown", event => {
+    if (!lightbox || lightbox.getAttribute("aria-hidden") === "true") return;
+    if (event.key === "Escape") window.closeLightbox();
+    if (event.key === "ArrowRight") window.nextImage();
+    if (event.key === "ArrowLeft") window.prevImage();
+  });
+})();
 </script>
 
 </body>
