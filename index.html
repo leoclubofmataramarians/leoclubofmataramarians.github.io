@@ -2813,6 +2813,17 @@ nav a {
   }
 }
 
+
+/* FINAL NEWSLETTER A4 COVER SIZE FIX */
+.newsletter-shelf { display:grid !important; grid-template-columns:repeat(5,minmax(150px,1fr)) !important; gap:18px !important; overflow:visible !important; padding:0 0 20px !important; }
+.newsletter-card { min-width:0 !important; width:100% !important; padding:10px !important; }
+.newsletter-card img { display:block !important; width:100% !important; height:auto !important; aspect-ratio:210 / 297 !important; object-fit:cover !important; object-position:center !important; border-radius:12px !important; }
+.newsletter-shelf .newsletter-card img { max-height:none !important; min-height:0 !important; }
+@media (min-width:1200px){ .newsletter-shelf{grid-template-columns:repeat(5,minmax(160px,1fr)) !important;} .newsletter-card{max-width:230px !important;justify-self:center !important;} }
+@media (max-width:1000px){.newsletter-shelf{grid-template-columns:repeat(4,minmax(145px,1fr)) !important;}}
+@media (max-width:720px){.newsletter-shelf{grid-template-columns:repeat(3,minmax(120px,1fr)) !important;gap:12px !important;}}
+@media (max-width:520px){.newsletter-shelf{grid-template-columns:repeat(2,minmax(125px,1fr)) !important;}}
+
 </style>
 </head>
 
@@ -2827,7 +2838,7 @@ nav a {
 </div>
 
 <header>
-  <h1>Leo Club of Matara Marians <img src="LCMM Logo.png" alt="LCMM Logo" decoding="async" width="35" height="35" decoding="async"></h1>
+  <h1>Leo Club of Matara Marians <img src="images/logo/LCMM Logo.png" alt="LCMM Logo" decoding="async" width="35" height="35" decoding="async"></h1>
 
   <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
     <i class="fa-solid fa-bars"></i>
@@ -2877,12 +2888,12 @@ nav a {
     </div>
 
     <div class="about-photos">
-      <img src="about1.jpg" alt="About Photo 1" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
-      <img src="about2.jpg" alt="About Photo 2" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
-      <img src="about3.jpg" alt="About Photo 3" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
-      <img src="about4.jpg" alt="About Photo 4" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
-      <img src="about5.jpg" alt="About Photo 5" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
-      <img src="about6.jpg" alt="About Photo 6" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about1.jpg" alt="About Photo 1" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about2.jpg" alt="About Photo 2" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about3.jpg" alt="About Photo 3" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about4.jpg" alt="About Photo 4" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about5.jpg" alt="About Photo 5" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
+      <img src="images/aboutus/about6.jpg" alt="About Photo 6" decoding="async" loading="lazy" fetchpriority="low" width="800" height="600">
     </div>
   </div>
 </section>
@@ -2893,49 +2904,49 @@ nav a {
 
   <div class="project-grid">
     <div class="glass project-card" onclick="openLightbox('project1')">
-      <img src="holy3.jpg" alt="Colours of Love Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/holy3.jpg" alt="Colours of Love Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Colours of Love – Namasthe Mathota</h3>
       <p>A celebration of unity beyond boundaries, spreading joy, harmony, and cultural togetherness.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project2')">
-      <img src="ff1.jpg" alt="Frosty Fest 24 Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/ff1.jpg" alt="Frosty Fest 24 Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Frosty Fest ’24</h3>
       <p>A heartwarming Christmas festival sharing hope, smiles, and festive cheer.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project3')">
-      <img src="btth1.jpg" alt="Back to the Shores Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/btth1.jpg" alt="Back to the Shores Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Back to the Shores</h3>
       <p>An environmental initiative restoring coastal beauty and protecting marine ecosystems.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project4')">
-      <img src="np1.jpg" alt="NutriPulse Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/np1.jpg" alt="NutriPulse Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>NutriPulse</h3>
       <p>Promoting healthy nutrition and awareness for a stronger future generation.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project5')">
-      <img src="ffmf1.jpg" alt="Melodies of Hope Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/ffmf1.jpg" alt="Melodies of Hope Project" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Frosty Fest - Melodies of Hope</h3>
       <p>A soulful musical evening of prayer, compassion, and togetherness.</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project6')">
-      <img src="pc.jpeg" alt="Pixel Craft - Phase II" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/pc.jpeg" alt="Pixel Craft - Phase II" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Pixel Craft - Phase II</h3>
       <p>Empowering Leos Through Digital Design</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project7')">
-      <img src="sp.jpeg" alt="Senehe Piyasa" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/sp.jpeg" alt="Senehe Piyasa" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Senehe Piyasa</h3>
       <p>Compassion in Action for Inclusive Communities</p>
     </div>
 
     <div class="glass project-card" onclick="openLightbox('project8')">
-      <img src="k.jpg" alt="Kaalartha" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
+      <img src="images/projects/k.jpg" alt="Kaalartha" decoding="async" loading="lazy" fetchpriority="low" width="900" height="600">
       <h3>Kaalaartha</h3>
       <p>Strengthening Education Through Infrastructure</p>
     </div>
@@ -2983,7 +2994,7 @@ nav a {
 
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="president.jpg" alt="President Leo Bisandi Mansari" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/president.jpg" alt="President Leo Bisandi Mansari" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>President</h4>
@@ -2992,7 +3003,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="vp.jpg" alt="Vice President Leo Tharunya Dahanayaka" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/vp.jpg" alt="Vice President Leo Tharunya Dahanayaka" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Vice President</h4>
@@ -3001,7 +3012,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="secretary.jpg" alt="Secretary Leo Hashma Humam" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/secretary.jpg" alt="Secretary Leo Hashma Humam" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Secretary</h4>
@@ -3010,7 +3021,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="treasurer.jpg" alt="Treasurer Leo Dahami Vihanga" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/treasurer.jpg" alt="Treasurer Leo Dahami Vihanga" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Treasurer</h4>
@@ -3019,7 +3030,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Senudi Sellahewa.jpg" alt="Assistant Secretary Leo Senudi Sellahewa" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Assistant Secretary</h4>
@@ -3028,7 +3039,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Rivindi Risindini.jpg" alt="Assistant Treasurer Leo Rivindi Risindini" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Assistant Treasurer</h4>
@@ -3044,7 +3055,7 @@ nav a {
 
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Mihili Manjuswara1.jpg" alt="Director of Membership Leo Mihili Manjuswara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Mihili Manjuswara1.jpg" alt="Director of Membership Leo Mihili Manjuswara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Director of Membership</h4>
@@ -3053,7 +3064,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Tharushi Omaya.jpg" alt="Director of PR Leo Tharushi Omaya" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Tharushi Omaya.jpg" alt="Director of PR Leo Tharushi Omaya" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Director of PR</h4>
@@ -3062,7 +3073,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Thisathma Weerasekara.jpg" alt="Director of Service Leo Thisathma Weerasekara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Thisathma Weerasekara.jpg" alt="Director of Service Leo Thisathma Weerasekara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Director of Service</h4>
@@ -3071,7 +3082,7 @@ nav a {
           </article>
           <article class="current-member-card archive-member-card interactive-tilt">
             <div class="current-member-photo">
-              <img src="Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
+              <img src="images/exco/25-26/Sanuki Dinhara1.jpg" alt="Director of Editorial Leo Sanuki Dinhara" loading="lazy" decoding="async" fetchpriority="low" width="800" height="1000">
             </div>
             <div class="current-member-info">
               <h4>Director of Editorial</h4>
@@ -3087,44 +3098,10 @@ nav a {
     <summary>
       <span>
         <small>Leadership Archive</small>
-        <strong>Past Committee · 2024/25</strong>
+        <strong>Past Club Presidents</strong>
       </span>
       <span class="archive-action">View Past Leadership <i class="fa-solid fa-chevron-down"></i></span>
     </summary>
-
-    <div class="past-leadership-content">
-      <div class="past-board-block">
-        <h3>Executive Committee 2024/25</h3>
-        <div class="past-member-grid leadership-member-grid" data-placeholder-board="executive"></div>
-      </div>
-
-      <div class="past-board-block">
-        <h3>Director Board 2024/25</h3>
-        <div class="past-member-grid leadership-member-grid" data-placeholder-board="directors"></div>
-      </div>
-    </div>
-  </details>
-
-  <details class="past-leadership glass lazy-past-archive" data-archive-year="2023/24">
-    <summary>
-      <span>
-        <small>Leadership Archive</small>
-        <strong>Past Committee · 2023/24</strong>
-      </span>
-      <span class="archive-action">View Past Leadership <i class="fa-solid fa-chevron-down"></i></span>
-    </summary>
-
-    <div class="past-leadership-content">
-      <div class="past-board-block">
-        <h3>Executive Committee 2023/24</h3>
-        <div class="past-member-grid leadership-member-grid" data-placeholder-board="executive"></div>
-      </div>
-
-      <div class="past-board-block">
-        <h3>Director Board 2023/24</h3>
-        <div class="past-member-grid leadership-member-grid" data-placeholder-board="directors"></div>
-      </div>
-    </div>
   </details>
 </section>
 
@@ -3430,17 +3407,18 @@ nav a {
 
   /* NEWSLETTER — SAME DESIGN/FUNCTION, INITIALIZED NEAR VIEWPORT */
   const newsletterIssues = [
-    { title: "Inside Marians", edition: "Edition 11", image: "Inside Marians MAY.png", url: "https://anyflip.com/gidmt/alfn/" },
-    { title: "Inside Marians", edition: "Edition 10", image: "Inside Marians APR.png", url: "https://anyflip.com/gidmt/zmzn/" },
-    { title: "Inside Marians", edition: "Edition 9", image: "Inside Marians Vol 1 Edition 9.png", url: "https://anyflip.com/gidmt/uxrl/" },
-    { title: "Inside Marians", edition: "Edition 8", image: "Inside Marians Vol 1 Edition 8.png", url: "https://anyflip.com/gidmt/resd/" },
-    { title: "Inside Marians", edition: "Edition 7", image: "Inside Marians Vol 1 Edition 7.png", url: "https://anyflip.com/gidmt/mbyq/" },
-    { title: "Inside Marians", edition: "Edition 6", image: "Inside Marians DEC.png", url: "https://anyflip.com/gidmt/hsbx/" },
-    { title: "Inside Marians", edition: "Edition 5", image: "Inside Marians NOV.png", url: "https://anyflip.com/gidmt/mwzi/" },
-    { title: "Inside Marians", edition: "Edition 4", image: "INSIDE MARIANS-OCT.png", url: "https://anyflip.com/gidmt/psft/" },
-    { title: "Inside Marians", edition: "Edition 3", image: "INSIDE MARIANS-SEP.png", url: "https://anyflip.com/gidmt/lzne/" },
-    { title: "Inside Marians", edition: "Edition 2", image: "MARIANS INSIDE.png", url: "https://anyflip.com/gidmt/mevl/" },
-    { title: "Inside Marians", edition: "Edition 1", image: "IME1V1.png", url: "https://anyflip.com/gidmt/tzgn/" }
+    { title: "Inside Marians", edition: "Volume 2 Edition 1", image: "images/newsletter/Inside Marians V2 E1.png", url: "https://anyflip.com/gidmt/oikv/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 11", image: "images/newsletter/Inside Marians MAY.png", url: "https://anyflip.com/gidmt/alfn/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 10", image: "images/newsletter/Inside Marians APR.png", url: "https://anyflip.com/gidmt/zmzn/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 9", image: "images/newsletter/Inside Marians Vol 1 Edition 9.png", url: "https://anyflip.com/gidmt/uxrl/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 8", image: "images/newsletter/Inside Marians Vol 1 Edition 8.png", url: "https://anyflip.com/gidmt/resd/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 7", image: "images/newsletter/Inside Marians Vol 1 Edition 7.png", url: "https://anyflip.com/gidmt/mbyq/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 6", image: "images/newsletter/Inside Marians DEC.png", url: "https://anyflip.com/gidmt/hsbx/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 5", image: "images/newsletter/Inside Marians NOV.png", url: "https://anyflip.com/gidmt/mwzi/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 4", image: "images/newsletter/INSIDE MARIANS-OCT.png", url: "https://anyflip.com/gidmt/psft/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 3", image: "images/newsletter/INSIDE MARIANS-SEP.png", url: "https://anyflip.com/gidmt/lzne/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 2", image: "images/newsletter/MARIANS INSIDE.png", url: "https://anyflip.com/gidmt/mevl/" },
+    { title: "Inside Marians", edition: "Volume 1 Edition 1", image: "images/newsletter/IME1V1.png", url: "https://anyflip.com/gidmt/tzgn/" }
   ];
 
   const newsletterSection = qs("#newsletter");
